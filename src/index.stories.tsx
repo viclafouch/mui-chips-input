@@ -5,7 +5,7 @@ import { ComponentMeta, ComponentStory } from '@storybook/react'
 import { MuiFileInput } from './index'
 
 export default {
-  title: 'MuiColorInput',
+  title: 'MuiFileInput',
   component: MuiFileInput
 } as ComponentMeta<typeof MuiFileInput>
 
