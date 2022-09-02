@@ -27,6 +27,11 @@ export default defineConfig({
         globals: {
           react: 'React',
           '@mui/material/TextField': 'TextField',
+          '@mui/icons-material/Close': 'CloseIcon',
+          '@mui/material/IconButton': 'IconButton',
+          '@mui/material/ClickAwayListener': 'ClickAwayListener',
+          '@mui/material/styles': 'styles',
+          '@mui/material/Chip': 'Chip',
           'react/jsx-runtime': 'jsxRuntime',
         }
       }
