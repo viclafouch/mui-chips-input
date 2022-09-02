@@ -2,19 +2,32 @@ import React from 'react'
 import { createTheme, ThemeProvider } from '@mui/material'
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 
-import { MuiFileInput } from './index'
+import { MuiChipsInput } from './index'
 
 export default {
-  title: 'MuiFileInput',
-  component: MuiFileInput
-} as ComponentMeta<typeof MuiFileInput>
+  title: 'MuiChipsInput',
+  component: MuiChipsInput
+} as ComponentMeta<typeof MuiChipsInput>
 
 const theme = createTheme()
 
-export const Primary: ComponentStory<typeof MuiFileInput> = () => {
+export const Primary: ComponentStory<typeof MuiChipsInput> = () => {
+  const [value, setValue] = React.useState<string[]>(['test'])
+
+  const handleChange = (newValue: string[]) => {
+    setValue(newValue)
+  }
+
   return (
     <ThemeProvider theme={theme}>
-      <MuiFileInput />
+      <MuiChipsInput
+        fullWidth
+        value={value}
+        label="Label"
+        clearInputOnBlur
+        hideClearAll
+        onChange={handleChange}
+      />
     </ThemeProvider>
   )
 }

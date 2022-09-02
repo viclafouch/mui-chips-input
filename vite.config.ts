@@ -18,8 +18,8 @@ export default defineConfig({
     minify: true,
     lib: {
       entry: path.resolve(__dirname, 'src/index.tsx'),
-      name: 'Mui-file-input',
-      fileName: format => `mui-file-input.${format}.js`
+      name: 'mui-chips-input',
+      fileName: format => `mui-chips-input.${format}.js`
     },
     rollupOptions: {
       output: {
