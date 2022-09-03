@@ -11,11 +11,12 @@ import Styled from './TextFieldChips.styled'
 
 type TextFieldChipsProps = TextFieldProps & {
   chips: MuiChipsInputChip[]
-  onAddChip: (chip: MuiChipsInputChip) => void
+  onAddChip?: (chip: MuiChipsInputChip) => void
   clearInputOnBlur?: boolean
   hideClearAll?: boolean
+  disableDeleteOnBackspace?: boolean
   validate?: MuiChipsInputProps['validate']
-  onInputChange?: TextFieldProps['onChange']
+  onInputChange?: (inputValue: string) => void
   onDeleteChip?: (chipIndex: number) => void
   onDeleteAllChips?: () => void
 }
@@ -39,6 +40,8 @@ const TextFieldChips = React.forwardRef(
       helperText,
       hideClearAll,
       inputProps,
+      size,
+      disableDeleteOnBackspace,
       ...restTextFieldProps
     } = props
     const [inputValue, setInputValue] = React.useState<string>('')
@@ -49,13 +52,18 @@ const TextFieldChips = React.forwardRef(
       setTextError('')
     }
 
+    const updateInputValue = (newInputValue: string) => {
+      onInputChange?.(newInputValue)
+      setInputValue(newInputValue)
+    }
+
     const clearInputValue = () => {
-      setInputValue('')
+      clearTextError()
+      updateInputValue('')
     }
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      setInputValue(event.target.value)
-      onInputChange?.(event)
+      updateInputValue(event.target.value)
     }
 
     const handleClickAway = () => {
@@ -81,22 +89,31 @@ const TextFieldChips = React.forwardRef(
           return
         }
       }
-      onAddChip(inputValue.trim())
-      clearTextError()
+      onAddChip?.(inputValue.trim())
       clearInputValue()
     }
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
       const isEnter = event.key === KEYBOARD_KEY.enter
       const isBackspace = event.key === KEYBOARD_KEY.backspace
+      const inputValueTrimed = inputValue.trim()
 
       if (isEnter) {
         event.preventDefault()
       }
 
       if (inputValue.length > 0 && isEnter) {
-        addChip(inputValue.trim(), event)
-      } else if (isBackspace && inputValue.length === 0 && chips.length > 0) {
+        if (inputValueTrimed.length === 0) {
+          clearInputValue()
+        } else {
+          addChip(inputValueTrimed, event)
+        }
+      } else if (
+        isBackspace &&
+        inputValue.length === 0 &&
+        chips.length > 0 &&
+        !disableDeleteOnBackspace
+      ) {
         onDeleteChip?.(chips.length - 1)
       }
 
@@ -108,7 +125,6 @@ const TextFieldChips = React.forwardRef(
       if (!hideClearAll && !disabled) {
         onDeleteAllChips?.()
         clearInputValue()
-        clearTextError()
       }
     }
 
@@ -129,6 +145,7 @@ const TextFieldChips = React.forwardRef(
           value={inputValue}
           onChange={handleChange}
           ref={propRef}
+          size={size}
           placeholder="Type and press enter"
           inputProps={{
             onKeyDown: handleKeyDown,
@@ -147,6 +164,7 @@ const TextFieldChips = React.forwardRef(
                       key={`chip-${index}`}
                       label={chip}
                       title={chip}
+                      size={size}
                       onKeyDown={(event) => {
                         if (event.key === KEYBOARD_KEY.enter) {
                           handleDeleteChip(index)()
@@ -187,7 +205,9 @@ TextFieldChips.defaultProps = {
   onInputChange: () => {},
   clearInputOnBlur: false,
   hideClearAll: false,
+  disableDeleteOnBackspace: false,
   onDeleteChip: () => {},
+  onAddChip: () => {},
   onDeleteAllChips: () => {},
   validate: () => {
     return true

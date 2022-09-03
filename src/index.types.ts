@@ -9,12 +9,13 @@ export type MuiChipsInputChip = string
 
 export interface BaseMuiChipsInputProps {
   value?: MuiChipsInputChip[]
-  onInputChange?: MuiTextFieldProps['onChange']
+  onInputChange?: (inputValue: string) => void
   onAddChip?: (chipValue: MuiChipsInputChip, chipIndex: number) => void
   onDeleteChip?: (chipValue: MuiChipsInputChip, chipIndex: number) => void
   onChange?: (value: MuiChipsInputChip[]) => void
   clearInputOnBlur?: boolean
   hideClearAll?: boolean
+  disableDeleteOnBackspace?: boolean
   validate?: (
     chipValue: MuiChipsInputChip
   ) => boolean | { isError: boolean; textError: string }

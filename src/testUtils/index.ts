@@ -5,6 +5,9 @@ import userEvent from '@testing-library/user-event'
 export function getInputElement() {
   return screen.getByRole<HTMLInputElement>('textbox')
 }
+export function getClearAllButton() {
+  return screen.queryByTestId('CloseIcon')
+}
 
 export async function typeInInputElement(
   value: string
@@ -22,4 +25,8 @@ export async function addChip(chipValue: string) {
 export function deleteChip(chipIndex: number) {
   const deleteSvg = screen.getAllByTestId('CancelIcon')[chipIndex]
   fireEvent.click(deleteSvg)
+}
+
+export function clearAllChips() {
+  return fireEvent.click(getClearAllButton() as HTMLElement)
 }

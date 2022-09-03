@@ -22,6 +22,7 @@ const MuiChipsInput = React.forwardRef(
       validate,
       clearInputOnBlur,
       hideClearAll,
+      disableDeleteOnBackspace,
       ...restTextFieldProps
     } = props as Required<MuiChipsInputProps>
 
@@ -54,6 +55,7 @@ const MuiChipsInput = React.forwardRef(
         chips={value}
         onAddChip={handleAddChip}
         onInputChange={onInputChange}
+        disableDeleteOnBackspace={disableDeleteOnBackspace}
         onDeleteChip={handleDeleteChip}
         onDeleteAllChips={handleDeleteAllChips}
         clearInputOnBlur={clearInputOnBlur}
@@ -75,6 +77,7 @@ MuiChipsInput.defaultProps = {
   onInputChange: () => {},
   clearInputOnBlur: false,
   hideClearAll: false,
+  disableDeleteOnBackspace: false,
   validate: () => {
     return true
   }

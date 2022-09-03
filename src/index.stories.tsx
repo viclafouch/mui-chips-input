@@ -25,7 +25,6 @@ export const Primary: ComponentStory<typeof MuiChipsInput> = () => {
         value={value}
         label="Label"
         clearInputOnBlur
-        hideClearAll
         onChange={handleChange}
       />
     </ThemeProvider>
