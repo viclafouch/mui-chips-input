@@ -6,7 +6,8 @@
   "bugs": {
     "url": "https://github.com/viclafouch/mui-chips-input/issues"
   },
-  "version": "1.0.2",
+  "homepage": "https://viclafouch.github.io/mui-chips-input",
+  "version": "1.0.0",
   "files": [
     "dist"
   ],
@@ -25,15 +26,14 @@
   },
   "keywords": [
     "react",
-    "file",
     "typescript",
     "input",
     "mui",
     "javascript",
-    "pdf",
-    "sheet",
-    "images",
-    "material"
+    "material",
+    "ui",
+    "form",
+    "chips"
   ],
   "scripts": {
     "build": "vite build",
