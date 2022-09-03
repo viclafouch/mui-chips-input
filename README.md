@@ -6,16 +6,44 @@
 
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/viclafouch/mui-chips-input/blob/master/LICENSE)
 ![ts](https://badgen.net/badge/Built%20With/TypeScript/blue)
+[![npm](https://img.shields.io/npm/v/mui-chips-input)](https://www.npmjs.com/package/mui-chips-input)
+
+<div align="center">
+  <img src="https://github.com/viclafouch/mui-chips-input/blob/main/mui-chips-input.gif" width="100%" />
+</div>
 
 </div>
 
 ## Installation
 
-WIP...
+```
+// with npm
+npm install mui-chips-input
+
+// with yarn
+yarn add mui-chips-input
+```
 
 ## Usage
 
-WIP...
+```jsx
+import React from 'react'
+import { MuiChipsInput } from 'mui-chips-input'
+
+const MyComponent = () => {
+  const [chips, setChips] = React.useState([])
+
+  const handleChange = (newChips) => {
+    setChips(newChips)
+  }
+
+  return (
+    <MuiChipsInput value={chips} onChange={handleChange} />
+  )
+}
+```
+
+## [Documentation](https://viclafouch.github.io/mui-chips-input/)
 
 ## Changelog
 

@@ -22,8 +22,9 @@ export const Primary: ComponentStory<typeof MuiChipsInput> = () => {
     <ThemeProvider theme={theme}>
       <MuiChipsInput
         fullWidth
+        sx={{ maxWidth: 400 }}
         value={value}
-        label="Label"
+        label="Fruits"
         clearInputOnBlur
         onChange={handleChange}
       />

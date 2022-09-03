@@ -1,5 +1,5 @@
 {
-  "name": "@viclafouch/mui-chips-input",
+  "name": "mui-chips-input",
   "description": "A chips input designed for the React library MUI",
   "author": "Victor de la Fouchardiere <victor.delafouchardiere@gmail.com> (https://github.com/viclafouch)",
   "license": "MIT",
