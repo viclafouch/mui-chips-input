@@ -36,12 +36,13 @@
     "chips"
   ],
   "scripts": {
-    "build": "vite build",
+    "build": "npm run test && vite build",
     "lint": "tsc && eslint . --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "npm run lint -- --fix",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "test": "vitest",
+    "test": "npm run lint && npm run test:unit",
+    "test:unit": "vitest",
     "release": "standard-version",
     "coverage": "vitest run --coverage",
     "prepare": "husky install"
