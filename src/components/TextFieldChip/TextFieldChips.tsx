@@ -42,6 +42,7 @@ const TextFieldChips = React.forwardRef(
       inputProps,
       size,
       disableDeleteOnBackspace,
+      className,
       ...restTextFieldProps
     } = props
     const [inputValue, setInputValue] = React.useState<string>('')
@@ -145,6 +146,7 @@ const TextFieldChips = React.forwardRef(
           value={inputValue}
           onChange={handleChange}
           ref={propRef}
+          className={`MuiChipsInput-TextField ${className || ''}`}
           size={size}
           placeholder="Type and press enter"
           inputProps={{
@@ -164,6 +166,7 @@ const TextFieldChips = React.forwardRef(
                       key={`chip-${index}`}
                       label={chip}
                       title={chip}
+                      className="MuiChipsInput-Chip"
                       size={size}
                       onKeyDown={(event) => {
                         if (event.key === KEYBOARD_KEY.enter) {

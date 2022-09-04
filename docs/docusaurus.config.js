@@ -55,7 +55,7 @@ const config = {
         title: 'MUI chips input',
         logo: {
           alt: 'MUI chips input',
-          src: 'img/logo.svg'
+          src: 'img/logo.png'
         },
         items: [
           {

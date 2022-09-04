@@ -2,19 +2,38 @@
   display: flex;
 }
 
+.MuiTextField-root {
+  max-width: 600px!important;
+  margin-inline: auto;
+  width: 100%;
+}
 
-.MuiTelInput-TextField input {
+.MuiTextField-root input {
   color: var(--ifm-color-black);
 }
 
-[data-theme="dark"] .MuiTelInput-TextField input {
+[data-theme="dark"] .MuiTextField-root .MuiFormLabel-root {
   color: var(--ifm-color-white);
 }
 
-.MuiTelInput-TextField fieldset {
+[data-theme="dark"] .MuiTextField-root input {
+  color: var(--ifm-color-white);
+}
+
+.MuiTextField-root fieldset {
   border-color: var(--ifm-color-black)!important;
 }
 
-[data-theme="dark"] .MuiTelInput-TextField fieldset {
+[data-theme="dark"] .MuiTextField-root fieldset {
   border-color: var(--ifm-color-white)!important;
+}
+[data-theme="dark"] .MuiTextField-root .MuiChip-root {
+  color: rgba(255, 255, 255, 1);
+  background-color: rgba(255, 255, 255, 0.08);
+}
+[data-theme="dark"] .MuiTextField-root .MuiButtonBase-root {
+  color: rgba(255, 255, 255, 0.54);
+}
+[data-theme="dark"] .MuiTextField-root .MuiChip-deleteIcon {
+  color: rgba(255, 255, 255, 0.54);
 }
