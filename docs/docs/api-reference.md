@@ -69,6 +69,24 @@ const handleDeleteChip = (chipValue, chipIndex) => {
 <MuiChipsInput value={['foo']} onDeleteChip={handleDeleteChip} />
 ```
 
+## `onEditChip`
+
+- Type: `(chipValue: string, chipIndex: number) => void`
+- Default: `undefined`
+
+Gets called once the user has edited a chip. User can edit a chip by double clicking on it.
+
+```tsx
+const handleEditChip = (chipValue, chipIndex) => {
+  /**
+  chipValue: 'bar'
+  chipIndex: 0
+  **/
+}
+
+<MuiChipsInput value={['foo']} onEditChip={handleEditChip} />
+```
+
 ## `onInputChange`
 
 - Type: `(inputValue) => void`

@@ -208,4 +208,81 @@ describe('components/TextFieldChips', () => {
 
     expect(testUtils.getClearAllButton()).toBeFalsy()
   })
+
+  test('should show chip value and chip in color on double click', () => {
+    render(<TextFieldChips chips={['test']} />)
+
+    const chip = screen.getByTitle('test')
+    fireEvent.doubleClick(chip)
+
+    expect(testUtils.getInputElement().value).toBe('test')
+    expect(chip.classList.contains('MuiChipsInput-Chip-Editing')).toBe(true)
+  })
+
+  test('should undo editing on re double click', () => {
+    render(<TextFieldChips chips={['test']} />)
+
+    const chip = screen.getByTitle('test')
+    fireEvent.doubleClick(chip)
+
+    expect(testUtils.getInputElement().value).toBe('test')
+    expect(chip.classList.contains('MuiChipsInput-Chip-Editing')).toBe(true)
+
+    fireEvent.doubleClick(chip)
+
+    expect(testUtils.getInputElement().value).toBe('')
+    expect(chip.classList.contains('MuiChipsInput-Chip-Editing')).toBe(false)
+  })
+
+  test('should update editing chip on click away', () => {
+    render(<TextFieldChips chips={['test', 'toto']} />)
+
+    const chip = screen.getByTitle('test')
+    fireEvent.doubleClick(chip)
+
+    expect(testUtils.getInputElement().value).toBe('test')
+    expect(chip.classList.contains('MuiChipsInput-Chip-Editing')).toBe(true)
+
+    const chip2 = screen.getByTitle('toto')
+    fireEvent.doubleClick(chip2)
+
+    expect(testUtils.getInputElement().value).toBe('toto')
+    expect(chip.classList.contains('MuiChipsInput-Chip-Editing')).toBe(false)
+    expect(chip2.classList.contains('MuiChipsInput-Chip-Editing')).toBe(true)
+  })
+
+  test('should not valid chip on double click', () => {
+    const callbackValidation = vi.fn(() => {
+      return true
+    })
+    render(<TextFieldChips chips={['test']} validate={callbackValidation} />)
+
+    const chip = screen.getByTitle('test')
+    fireEvent.doubleClick(chip)
+
+    expect(callbackValidation).not.toHaveBeenCalled()
+  })
+
+  test('should call onEdit prop', async () => {
+    const callbackOnEditChip = vi.fn(() => {})
+    render(
+      <TextFieldChips
+        chips={['I like']}
+        hideClearAll
+        onEditChip={callbackOnEditChip}
+      />
+    )
+
+    const chip = screen.getByTitle('I like')
+    fireEvent.doubleClick(chip)
+
+    await testUtils.typeInInputElement(' apples')
+    expect(testUtils.getInputElement().value).toBe('I like apples')
+    await userEvent.keyboard('{enter}')
+
+    expect(callbackOnEditChip).toHaveBeenCalledWith('I like apples', 0)
+    expect(testUtils.getInputElement().value).toBe('')
+    expect(chip.classList.contains('MuiChipsInput-Chip-Editing')).toBe(false)
+    expect(screen.getAllByRole('button').length).toBe(1)
+  })
 })

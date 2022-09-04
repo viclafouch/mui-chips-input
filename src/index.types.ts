@@ -12,6 +12,7 @@ export interface BaseMuiChipsInputProps {
   onInputChange?: (inputValue: string) => void
   onAddChip?: (chipValue: MuiChipsInputChip, chipIndex: number) => void
   onDeleteChip?: (chipValue: MuiChipsInputChip, chipIndex: number) => void
+  onEditChip?: (chipValue: MuiChipsInputChip, chipIndex: number) => void
   onChange?: (value: MuiChipsInputChip[]) => void
   clearInputOnBlur?: boolean
   hideClearAll?: boolean

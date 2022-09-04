@@ -3,8 +3,10 @@ import CloseIcon from '@mui/icons-material/Close'
 import ClickAwayListener from '@mui/material/ClickAwayListener'
 import IconButton from '@mui/material/IconButton'
 import type { TextFieldProps } from '@mui/material/TextField'
+import Chip from '@components/Chip/Chip'
 import { KEYBOARD_KEY } from '@shared/constants/event'
 import { matchIsBoolean } from '@shared/helpers/boolean'
+import { assocRefToPropRef } from '@shared/helpers/ref'
 
 import type { MuiChipsInputChip, MuiChipsInputProps } from '../../index.types'
 import Styled from './TextFieldChips.styled'
@@ -12,6 +14,7 @@ import Styled from './TextFieldChips.styled'
 type TextFieldChipsProps = TextFieldProps & {
   chips: MuiChipsInputChip[]
   onAddChip?: (chip: MuiChipsInputChip) => void
+  onEditChip?: (chip: MuiChipsInputChip, chipIndex: number) => void
   clearInputOnBlur?: boolean
   hideClearAll?: boolean
   disableDeleteOnBackspace?: boolean
@@ -29,6 +32,7 @@ const TextFieldChips = React.forwardRef(
     const {
       chips,
       onAddChip,
+      onEditChip,
       onDeleteChip,
       onDeleteAllChips,
       InputProps,
@@ -47,7 +51,12 @@ const TextFieldChips = React.forwardRef(
     } = props
     const [inputValue, setInputValue] = React.useState<string>('')
     const [textError, setTextError] = React.useState<string>('')
+    const inputElRef = React.useRef<HTMLDivElement | null>(null)
+    const [chipIndexEditable, setChipIndexEditable] = React.useState<
+      null | number
+    >(null)
     const { onKeyDown, ...restInputProps } = inputProps || {}
+    const { inputRef, ...restIInputProps } = InputProps || {}
 
     const clearTextError = () => {
       setTextError('')
@@ -56,6 +65,16 @@ const TextFieldChips = React.forwardRef(
     const updateInputValue = (newInputValue: string) => {
       onInputChange?.(newInputValue)
       setInputValue(newInputValue)
+    }
+
+    const updateChipIndexEditable = (chipIndex: number) => {
+      updateInputValue(chips[chipIndex])
+      setChipIndexEditable(chipIndex)
+      clearTextError()
+    }
+
+    const clearChipIndexEditable = () => {
+      setChipIndexEditable(null)
     }
 
     const clearInputValue = () => {
@@ -68,30 +87,69 @@ const TextFieldChips = React.forwardRef(
     }
 
     const handleClickAway = () => {
-      clearTextError()
-      if (clearInputOnBlur) {
+      if (chipIndexEditable !== null) {
+        clearChipIndexEditable()
+        clearInputValue()
+      } else if (clearInputOnBlur) {
         clearInputValue()
       }
+    }
+
+    const handleRef = (ref: HTMLDivElement | null): void => {
+      // @ts-ignore
+      inputElRef.current = ref
+      if (propRef) {
+        assocRefToPropRef(ref, propRef)
+      }
+    }
+
+    const validationGuard = (
+      chipValue: MuiChipsInputChip,
+      event: React.KeyboardEvent<HTMLInputElement>
+    ) => {
+      return (callback: () => void) => {
+        if (typeof validate === 'function') {
+          const validation = validate(chipValue)
+          if (validation === false) {
+            event.preventDefault()
+            return
+          }
+          if (!matchIsBoolean(validation) && validation.isError) {
+            event.preventDefault()
+            setTextError(validation.textError)
+            return
+          }
+        }
+        callback()
+      }
+    }
+
+    const updateChip = (
+      chipValue: MuiChipsInputChip,
+      chipIndex: number,
+      event: React.KeyboardEvent<HTMLInputElement>
+    ) => {
+      validationGuard(
+        chipValue,
+        event
+      )(() => {
+        onEditChip?.(chipValue, chipIndex)
+        clearChipIndexEditable()
+        clearInputValue()
+      })
     }
 
     const addChip = (
       chipValue: MuiChipsInputChip,
       event: React.KeyboardEvent<HTMLInputElement>
     ) => {
-      if (typeof validate === 'function') {
-        const validation = validate(chipValue)
-        if (validation === false) {
-          event.preventDefault()
-          return
-        }
-        if (!matchIsBoolean(validation) && validation.isError) {
-          event.preventDefault()
-          setTextError(validation.textError)
-          return
-        }
-      }
-      onAddChip?.(inputValue.trim())
-      clearInputValue()
+      validationGuard(
+        chipValue,
+        event
+      )(() => {
+        onAddChip?.(inputValue.trim())
+        clearInputValue()
+      })
     }
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -106,6 +164,8 @@ const TextFieldChips = React.forwardRef(
       if (inputValue.length > 0 && isEnter) {
         if (inputValueTrimed.length === 0) {
           clearInputValue()
+        } else if (chipIndexEditable !== null) {
+          updateChip(inputValueTrimed, chipIndexEditable, event)
         } else {
           addChip(inputValueTrimed, event)
         }
@@ -115,7 +175,11 @@ const TextFieldChips = React.forwardRef(
         chips.length > 0 &&
         !disableDeleteOnBackspace
       ) {
-        onDeleteChip?.(chips.length - 1)
+        const chipIndex = chips.length - 1
+        onDeleteChip?.(chipIndex)
+        if (chipIndexEditable === chipIndex) {
+          clearChipIndexEditable()
+        }
       }
 
       onKeyDown?.(event)
@@ -126,15 +190,29 @@ const TextFieldChips = React.forwardRef(
       if (!hideClearAll && !disabled) {
         onDeleteAllChips?.()
         clearInputValue()
+        clearChipIndexEditable()
       }
     }
 
+    const handleEdit = (chipIndex: number) => {
+      if (chipIndex === chipIndexEditable) {
+        clearInputValue()
+        clearChipIndexEditable()
+      } else {
+        updateChipIndexEditable(chipIndex)
+      }
+
+      inputElRef.current?.focus()
+    }
+
     const handleDeleteChip = (chipIndex: number) => {
-      return () => {
-        if (disabled) {
-          return
-        }
-        onDeleteChip?.(chipIndex)
+      if (disabled) {
+        return
+      }
+      onDeleteChip?.(chipIndex)
+      if (chipIndexEditable !== null) {
+        clearChipIndexEditable()
+        clearInputValue()
       }
     }
 
@@ -157,25 +235,22 @@ const TextFieldChips = React.forwardRef(
           error={Boolean(textError) || error}
           helperText={textError || helperText}
           InputProps={{
+            inputRef: handleRef,
             startAdornment: hasAtLeastOneChip
               ? chips.map((chip, index) => {
                   return (
-                    <Styled.ChipStyled
+                    <Chip
                       // We don't use the chip as it can be duplicated by the user
                       // eslint-disable-next-line react/no-array-index-key
                       key={`chip-${index}`}
+                      index={index}
+                      onEdit={handleEdit}
                       label={chip}
                       title={chip}
-                      className="MuiChipsInput-Chip"
+                      isEditing={index === chipIndexEditable}
                       size={size}
-                      onKeyDown={(event) => {
-                        if (event.key === KEYBOARD_KEY.enter) {
-                          handleDeleteChip(index)()
-                        }
-                      }}
-                      tabIndex={disabled ? -1 : 0}
-                      aria-disabled={disabled}
-                      onDelete={handleDeleteChip(index)}
+                      disabled={disabled}
+                      onDelete={handleDeleteChip}
                     />
                   )
                 })
@@ -195,7 +270,7 @@ const TextFieldChips = React.forwardRef(
                 </IconButton>
               </Styled.EndAdornmentClose>
             ) : null,
-            ...InputProps
+            ...restIInputProps
           }}
           {...restTextFieldProps}
         />
@@ -211,6 +286,7 @@ TextFieldChips.defaultProps = {
   disableDeleteOnBackspace: false,
   onDeleteChip: () => {},
   onAddChip: () => {},
+  onEditChip: () => {},
   onDeleteAllChips: () => {},
   validate: () => {
     return true

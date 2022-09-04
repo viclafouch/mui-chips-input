@@ -1,6 +1,6 @@
 import React from 'react'
 import TextFieldChips from '@components/TextFieldChip/TextFieldChips'
-import { append, removeIndex } from '@shared/helpers/array'
+import { append, removeIndex, updateIndex } from '@shared/helpers/array'
 
 import type {
   BaseMuiChipsInputProps,
@@ -23,6 +23,7 @@ const MuiChipsInput = React.forwardRef(
       clearInputOnBlur,
       hideClearAll,
       disableDeleteOnBackspace,
+      onEditChip,
       ...restTextFieldProps
     } = props as Required<MuiChipsInputProps>
 
@@ -43,7 +44,18 @@ const MuiChipsInput = React.forwardRef(
       }
       const chip = value[chipIndex]
       onChange?.(removeIndex(value, chipIndex))
-      onDeleteChip(chip, chipIndex)
+      onDeleteChip?.(chip, chipIndex)
+    }
+
+    const handleEditChip = (
+      chipValue: MuiChipsInputChip,
+      chipIndex: number
+    ) => {
+      if (disabled) {
+        return
+      }
+      onChange?.(updateIndex(value, chipIndex, chipValue))
+      onEditChip?.(chipValue, chipIndex)
     }
 
     const handleDeleteAllChips = () => {
@@ -57,6 +69,7 @@ const MuiChipsInput = React.forwardRef(
         onInputChange={onInputChange}
         disableDeleteOnBackspace={disableDeleteOnBackspace}
         onDeleteChip={handleDeleteChip}
+        onEditChip={handleEditChip}
         onDeleteAllChips={handleDeleteAllChips}
         clearInputOnBlur={clearInputOnBlur}
         disabled={disabled}
@@ -75,6 +88,7 @@ MuiChipsInput.defaultProps = {
   onAddChip: () => {},
   onDeleteChip: () => {},
   onInputChange: () => {},
+  onEditChip: () => {},
   clearInputOnBlur: false,
   hideClearAll: false,
   disableDeleteOnBackspace: false,
