@@ -35,7 +35,12 @@ const HomepageHeader = () => {
           </Link>
           .
         </p>
-        <MuiChipsInput label="Fruits" value={chips} onChange={handleChange} />
+        <MuiChipsInput
+          label="Fruits"
+          value={chips}
+          onChange={handleChange}
+          helperText={chips.length > 0 ? 'Double click to edit a chip' : ''}
+        />
         <div className={styles.buttons}>
           <Link
             className="button button--secondary button--lg"

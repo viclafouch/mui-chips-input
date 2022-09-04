@@ -142,7 +142,7 @@ By default, if the input field is empty and the user presses the delete key, the
 - Type: `(chipValue: string) => boolean | { isError: boolean; textError: string }`
 - Default: `() => true`
 
-Set a validation to your new chips.
+Set a validation to your new chips, or when user is editing a chip.
 
 ```tsx
 <MuiChipsInput validate={(chipValue) => chipValue.length >= 3} />

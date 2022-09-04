@@ -16,7 +16,8 @@
   color: var(--ifm-color-white);
 }
 
-[data-theme="dark"] .MuiTextField-root input {
+[data-theme="dark"] .MuiTextField-root input,
+[data-theme="dark"] .MuiTextField-root p {
   color: var(--ifm-color-white);
 }
 
@@ -30,6 +31,10 @@
 [data-theme="dark"] .MuiTextField-root .MuiChip-root {
   color: rgba(255, 255, 255, 1);
   background-color: rgba(255, 255, 255, 0.08);
+}
+[data-theme="dark"] .MuiTextField-root .MuiChip-root.MuiChipsInput-Chip-Editing {
+  color: rgba(255, 255, 255, 1);
+  background-color: #8FC9F9;
 }
 [data-theme="dark"] .MuiTextField-root .MuiButtonBase-root {
   color: rgba(255, 255, 255, 0.54);

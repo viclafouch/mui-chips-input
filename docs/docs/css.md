@@ -17,6 +17,7 @@ Then, you can use the differents global class names (see below) to target an ele
 | ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
 | `.MuiChipsInput-TextField`                        | 	Styles applied to the root element.                                                                                                                   |
 | `.MuiChipsInput-Chip`                        | 	Styles applied to the [Chip](https://mui.com/material-ui/api/chip/) component.                                                                                                                   |
+| `.MuiChipsInput-Chip-Editing`                        | 	Styles applied to the [Chip](https://mui.com/material-ui/api/chip/) component when user is editing it.                                                                                                                   |
 
 For example: target the `.MuiChipsInput-Chip` global class name to customize all chips.
 
