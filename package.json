@@ -36,7 +36,7 @@
     "chips"
   ],
   "scripts": {
-    "build": "npm run lint && npm run test && vite build",
+    "build": "npm run lint && npm run test -- run && vite build",
     "lint": "tsc && eslint . --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "npm run lint -- --fix",
     "storybook": "start-storybook -p 6006",
