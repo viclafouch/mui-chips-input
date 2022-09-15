@@ -8,7 +8,12 @@ import { KEYBOARD_KEY } from '@shared/constants/event'
 import { matchIsBoolean } from '@shared/helpers/boolean'
 import { assocRefToPropRef } from '@shared/helpers/ref'
 
-import type { MuiChipsInputChip, MuiChipsInputProps } from '../../index.types'
+import type {
+  MuiChipsInputChip,
+  MuiChipsInputChipComponent,
+  MuiChipsInputChipProps,
+  MuiChipsInputProps
+} from '../../index.types'
 import Styled from './TextFieldChips.styled'
 
 type TextFieldChipsProps = TextFieldProps & {
@@ -18,10 +23,15 @@ type TextFieldChipsProps = TextFieldProps & {
   clearInputOnBlur?: boolean
   hideClearAll?: boolean
   disableDeleteOnBackspace?: boolean
+  disableEdition?: boolean
   validate?: MuiChipsInputProps['validate']
   onInputChange?: (inputValue: string) => void
   onDeleteChip?: (chipIndex: number) => void
   onDeleteAllChips?: () => void
+  renderChip?: (
+    ChipComponent: MuiChipsInputChipComponent,
+    ChipProps: MuiChipsInputChipProps
+  ) => JSX.Element
 }
 
 const TextFieldChips = React.forwardRef(
@@ -46,7 +56,9 @@ const TextFieldChips = React.forwardRef(
       inputProps,
       size,
       disableDeleteOnBackspace,
+      disableEdition,
       className,
+      renderChip,
       ...restTextFieldProps
     } = props
     const [inputValue, setInputValue] = React.useState<string>('')
@@ -238,20 +250,22 @@ const TextFieldChips = React.forwardRef(
             inputRef: handleRef,
             startAdornment: hasAtLeastOneChip
               ? chips.map((chip, index) => {
-                  return (
-                    <Chip
-                      // We don't use the chip as it can be duplicated by the user
-                      // eslint-disable-next-line react/no-array-index-key
-                      key={`chip-${index}`}
-                      index={index}
-                      onEdit={handleEdit}
-                      label={chip}
-                      title={chip}
-                      isEditing={index === chipIndexEditable}
-                      size={size}
-                      disabled={disabled}
-                      onDelete={handleDeleteChip}
-                    />
+                  const ChipProps: MuiChipsInputChipProps = {
+                    key: `chip-${index}`,
+                    index,
+                    onEdit: handleEdit,
+                    label: chip,
+                    title: chip,
+                    isEditing: index === chipIndexEditable,
+                    size,
+                    disabled,
+                    disableEdition,
+                    onDelete: handleDeleteChip
+                  }
+                  return renderChip ? (
+                    renderChip(Chip, ChipProps)
+                  ) : (
+                    <Chip {...ChipProps} />
                   )
                 })
               : null,
@@ -284,9 +298,11 @@ TextFieldChips.defaultProps = {
   clearInputOnBlur: false,
   hideClearAll: false,
   disableDeleteOnBackspace: false,
+  disableEdition: false,
   onDeleteChip: () => {},
   onAddChip: () => {},
   onEditChip: () => {},
+  renderChip: undefined,
   onDeleteAllChips: () => {},
   validate: () => {
     return true

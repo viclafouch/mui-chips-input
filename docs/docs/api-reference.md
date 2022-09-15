@@ -126,6 +126,17 @@ Hide the "x" icon button to prevent the user from deleting all the chips.
 <MuiChipsInput hideClearAll />
 ```
 
+## `disableEdition`
+
+- Type: `boolean`
+- Default: `false`
+
+Prevent the user from editing a chip when double click on it.
+
+```tsx
+<MuiChipsInput disableEdition />
+```
+
 ## `disableDeleteOnBackspace`
 
 - Type: `boolean`
@@ -135,6 +146,19 @@ By default, if the input field is empty and the user presses the delete key, the
 
 ```tsx
 <MuiChipsInput disableDeleteOnBackspace />
+```
+
+## `renderChip`
+
+- Type: `(ChipComponent: MuiChipsInputChipComponent, ChipProps: MuiChipsInputChipProps) => JSX.Element`
+- Default: `undefined`
+
+Custom how to render a Chip element in case if you want to add / edit the [Chip props](https://mui.com/material-ui/api/chip/).
+
+```tsx
+<MuiChipsInput renderChip={(Component, props) => {
+  return <Component {...props} deleteIcon={<FaceIcon />} />
+}} />
 ```
 
 ## `validate`

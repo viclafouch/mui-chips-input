@@ -1,15 +1,10 @@
 import React from 'react'
-import { ChipProps as MuiChipsProps } from '@mui/material/Chip'
 import { KEYBOARD_KEY } from '@shared/constants/event'
 
+import type { MuiChipsInputChipProps } from '../../index.types'
 import Styled from './Chip.styled'
 
-type ChipProps = MuiChipsProps & {
-  index: number
-  onDelete: (index: number) => void
-  onEdit: (index: number) => void
-  isEditing: boolean
-}
+type ChipProps = MuiChipsInputChipProps
 
 const Chip = (props: ChipProps) => {
   const {
@@ -19,6 +14,7 @@ const Chip = (props: ChipProps) => {
     disabled,
     onEdit,
     isEditing,
+    disableEdition,
     ...restChipProps
   } = props
 
@@ -28,11 +24,18 @@ const Chip = (props: ChipProps) => {
     }
   }
 
-  const handleDelete = () => {
+  const handleDelete = (event: MouseEvent) => {
+    event?.preventDefault?.()
+    event?.stopPropagation?.()
     onDelete(index)
   }
 
-  const handleDoubleClick = () => {
+  const handleDoubleClick = (event: React.MouseEvent) => {
+    const target = event.target as HTMLElement
+    // Return if click on a svg icon
+    if (target.textContent !== restChipProps.label) {
+      return
+    }
     if (!disabled) {
       onEdit(index)
     }
@@ -42,10 +45,10 @@ const Chip = (props: ChipProps) => {
     <Styled.ChipStyled
       className={`MuiChipsInput-Chip ${
         isEditing ? 'MuiChipsInput-Chip-Editing' : ''
-      }`}
+      } ${className || ''}`}
       onKeyDown={handleKeyDown}
       disabled={disabled}
-      onDoubleClick={handleDoubleClick}
+      onDoubleClick={disableEdition ? undefined : handleDoubleClick}
       tabIndex={disabled ? -1 : 0}
       aria-disabled={disabled}
       onDelete={handleDelete}

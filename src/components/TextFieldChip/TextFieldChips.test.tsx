@@ -1,4 +1,5 @@
 import React from 'react'
+import EmailIcon from '@mui/icons-material/Email'
 import { fireEvent, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { vi } from 'vitest'
@@ -234,6 +235,17 @@ describe('components/TextFieldChips', () => {
     expect(chip.classList.contains('MuiChipsInput-Chip-Editing')).toBe(false)
   })
 
+  test('should not be able to edit a chip when disableEdition is true', () => {
+    render(<TextFieldChips chips={['test']} disableEdition />)
+
+    const chip = screen.getByTitle('test')
+    fireEvent.doubleClick(chip)
+
+    expect(testUtils.getInputElement().value).toBe('')
+
+    expect(chip.classList.contains('MuiChipsInput-Chip-Editing')).toBe(false)
+  })
+
   test('should update editing chip on click away', () => {
     render(<TextFieldChips chips={['test', 'toto']} />)
 
@@ -284,5 +296,18 @@ describe('components/TextFieldChips', () => {
     expect(testUtils.getInputElement().value).toBe('')
     expect(chip.classList.contains('MuiChipsInput-Chip-Editing')).toBe(false)
     expect(screen.getAllByRole('button').length).toBe(1)
+  })
+
+  test('should edit chip props with the renderChip prop', () => {
+    render(
+      <TextFieldChips
+        chips={['test']}
+        renderChip={(ChipComponent, ChipProps) => {
+          return <ChipComponent {...ChipProps} deleteIcon={<EmailIcon />} />
+        }}
+      />
+    )
+
+    expect(screen.getByTestId('EmailIcon')).toBeTruthy()
   })
 })

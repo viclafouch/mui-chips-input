@@ -8,7 +8,7 @@ const ChipStyled = styled(Chip)(({ theme, size }) => {
     height: ${size === 'small' ? '26px' : '32px'};
 
 
-    &[aria-disabled="true"] > svg.MuiChip-deleteIcon {
+    &[aria-disabled="true"] > svg {
       color: ${theme.palette.action.disabled};
       cursor: default;
     }

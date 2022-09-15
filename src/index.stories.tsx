@@ -24,6 +24,7 @@ export const Primary: ComponentStory<typeof MuiChipsInput> = () => {
         fullWidth
         sx={{ maxWidth: 400 }}
         value={value}
+        disableEdition
         label="Fruits"
         clearInputOnBlur
         onChange={handleChange}
