@@ -31,6 +31,7 @@ export interface BaseMuiChipsInputProps {
   onDeleteChip?: (chipValue: MuiChipsInputChip, chipIndex: number) => void
   onEditChip?: (chipValue: MuiChipsInputChip, chipIndex: number) => void
   onChange?: (value: MuiChipsInputChip[]) => void
+  addOnWhichKey?: string[] | string
   renderChip?: (
     ChipComponent: MuiChipsInputChipComponent,
     ChipProps: MuiChipsInputChipProps

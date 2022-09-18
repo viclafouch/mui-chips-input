@@ -1,5 +1,6 @@
 import React from 'react'
 import TextFieldChips from '@components/TextFieldChip/TextFieldChips'
+import { KEYBOARD_KEY } from '@shared/constants/event'
 import { append, removeIndex, updateIndex } from '@shared/helpers/array'
 
 import type {
@@ -32,6 +33,7 @@ const MuiChipsInput = React.forwardRef(
       onEditChip,
       renderChip,
       disableEdition,
+      addOnWhichKey,
       ...restTextFieldProps
     } = props as Required<MuiChipsInputProps>
 
@@ -85,6 +87,7 @@ const MuiChipsInput = React.forwardRef(
         disableEdition={disableEdition}
         validate={validate}
         hideClearAll={hideClearAll}
+        addOnWhichKey={addOnWhichKey}
         {...restTextFieldProps}
         ref={propRef}
       />
@@ -99,6 +102,7 @@ MuiChipsInput.defaultProps = {
   onDeleteChip: () => {},
   onInputChange: () => {},
   onEditChip: () => {},
+  addOnWhichKey: KEYBOARD_KEY.enter,
   clearInputOnBlur: false,
   disableEdition: false,
   hideClearAll: false,

@@ -23,6 +23,7 @@ type TextFieldChipsProps = TextFieldProps & {
   clearInputOnBlur?: boolean
   hideClearAll?: boolean
   disableDeleteOnBackspace?: boolean
+  addOnWhichKey?: string | string[]
   disableEdition?: boolean
   validate?: MuiChipsInputProps['validate']
   onInputChange?: (inputValue: string) => void
@@ -59,6 +60,7 @@ const TextFieldChips = React.forwardRef(
       disableEdition,
       className,
       renderChip,
+      addOnWhichKey,
       ...restTextFieldProps
     } = props
     const [inputValue, setInputValue] = React.useState<string>('')
@@ -164,16 +166,29 @@ const TextFieldChips = React.forwardRef(
       })
     }
 
+    const matchIsValidKeyToAdd = (eventKey: string) => {
+      if (addOnWhichKey) {
+        if (Array.isArray(addOnWhichKey)) {
+          return addOnWhichKey.some((key) => {
+            return key === eventKey
+          })
+        }
+        return addOnWhichKey === eventKey
+      }
+
+      return eventKey === KEYBOARD_KEY.enter
+    }
+
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-      const isEnter = event.key === KEYBOARD_KEY.enter
+      const isKeyIsAdd = matchIsValidKeyToAdd(event.key)
       const isBackspace = event.key === KEYBOARD_KEY.backspace
       const inputValueTrimed = inputValue.trim()
 
-      if (isEnter) {
+      if (isKeyIsAdd) {
         event.preventDefault()
       }
 
-      if (inputValue.length > 0 && isEnter) {
+      if (inputValue.length > 0 && isKeyIsAdd) {
         if (inputValueTrimed.length === 0) {
           clearInputValue()
         } else if (chipIndexEditable !== null) {
@@ -299,6 +314,7 @@ TextFieldChips.defaultProps = {
   hideClearAll: false,
   disableDeleteOnBackspace: false,
   disableEdition: false,
+  addOnWhichKey: KEYBOARD_KEY.enter,
   onDeleteChip: () => {},
   onAddChip: () => {},
   onEditChip: () => {},

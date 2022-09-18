@@ -1,4 +1,4 @@
-export const KEYBOARD_KEY: Record<string, KeyboardEvent['key']> = {
+export const KEYBOARD_KEY = {
   enter: 'Enter',
   backspace: 'Backspace'
 }

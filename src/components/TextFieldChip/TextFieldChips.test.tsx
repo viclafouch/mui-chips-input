@@ -29,6 +29,36 @@ describe('components/TextFieldChips', () => {
     expect(callbackOnAddChip).toHaveBeenCalledWith('test')
   })
 
+  test('should call onAddChip when new chip is added with a custom key in string', async () => {
+    const callbackOnAddChip = vi.fn(() => {})
+    render(
+      <TextFieldChips
+        addOnWhichKey="a"
+        chips={[]}
+        onAddChip={callbackOnAddChip}
+      />
+    )
+    const inputElement = screen.getByRole<HTMLInputElement>('textbox')
+    await userEvent.type(inputElement, 'test', { delay: 1 })
+    await userEvent.keyboard('{a}')
+    expect(callbackOnAddChip).toHaveBeenCalledWith('test')
+  })
+
+  test('should call onAddChip when new chip is added with a custom key in array', async () => {
+    const callbackOnAddChip = vi.fn(() => {})
+    render(
+      <TextFieldChips
+        addOnWhichKey={['a', 'p']}
+        chips={[]}
+        onAddChip={callbackOnAddChip}
+      />
+    )
+    const inputElement = screen.getByRole<HTMLInputElement>('textbox')
+    await userEvent.type(inputElement, 'test', { delay: 1 })
+    await userEvent.keyboard('{p}')
+    expect(callbackOnAddChip).toHaveBeenCalledWith('test')
+  })
+
   test('should call onDeleteChip when user use backspace without disableDeleteOnBackspace', () => {
     const callbackOnDeleteChip = vi.fn(() => {})
     render(
