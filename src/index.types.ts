@@ -27,6 +27,7 @@ export type MuiChipsInputChip = string
 export interface BaseMuiChipsInputProps {
   value?: MuiChipsInputChip[]
   onInputChange?: (inputValue: string) => void
+  inputValue?: string
   onAddChip?: (chipValue: MuiChipsInputChip, chipIndex: number) => void
   onDeleteChip?: (chipValue: MuiChipsInputChip, chipIndex: number) => void
   onEditChip?: (chipValue: MuiChipsInputChip, chipIndex: number) => void

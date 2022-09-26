@@ -25,6 +25,7 @@ type TextFieldChipsProps = TextFieldProps & {
   disableDeleteOnBackspace?: boolean
   addOnWhichKey?: string | string[]
   disableEdition?: boolean
+  inputValue?: string
   validate?: MuiChipsInputProps['validate']
   onInputChange?: (inputValue: string) => void
   onDeleteChip?: (chipIndex: number) => void
@@ -61,11 +62,18 @@ const TextFieldChips = React.forwardRef(
       className,
       renderChip,
       addOnWhichKey,
+      onFocus,
+      inputValue: inputValueControlled,
       ...restTextFieldProps
     } = props
-    const [inputValue, setInputValue] = React.useState<string>('')
+    const [inputValueUncontrolled, setInputValueUncontrolled] =
+      React.useState<string>('')
     const [textError, setTextError] = React.useState<string>('')
     const inputElRef = React.useRef<HTMLDivElement | null>(null)
+    const isFocusingRef = React.useRef<boolean>(false)
+    const isControlledRef = React.useRef(
+      typeof inputValueControlled === 'string'
+    )
     const [chipIndexEditable, setChipIndexEditable] = React.useState<
       null | number
     >(null)
@@ -76,9 +84,16 @@ const TextFieldChips = React.forwardRef(
       setTextError('')
     }
 
+    const isControlled = isControlledRef.current
+    const inputValue = isControlled
+      ? (inputValueControlled as string)
+      : inputValueUncontrolled
+
     const updateInputValue = (newInputValue: string) => {
       onInputChange?.(newInputValue)
-      setInputValue(newInputValue)
+      if (!isControlled) {
+        setInputValueUncontrolled(newInputValue)
+      }
     }
 
     const updateChipIndexEditable = (chipIndex: number) => {
@@ -101,12 +116,17 @@ const TextFieldChips = React.forwardRef(
     }
 
     const handleClickAway = () => {
+      if (!isFocusingRef.current) {
+        return
+      }
       if (chipIndexEditable !== null) {
         clearChipIndexEditable()
         clearInputValue()
       } else if (clearInputOnBlur) {
         clearInputValue()
       }
+
+      isFocusingRef.current = false
     }
 
     const handleRef = (ref: HTMLDivElement | null): void => {
@@ -212,6 +232,12 @@ const TextFieldChips = React.forwardRef(
       onKeyDown?.(event)
     }
 
+    const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
+      event.preventDefault()
+      onFocus?.(event)
+      isFocusingRef.current = true
+    }
+
     const handleClearAll = (event: React.MouseEvent<HTMLButtonElement>) => {
       event.preventDefault()
       if (!hideClearAll && !disabled) {
@@ -254,6 +280,7 @@ const TextFieldChips = React.forwardRef(
           className={`MuiChipsInput-TextField ${className || ''}`}
           size={size}
           placeholder="Type and press enter"
+          onFocus={handleFocus}
           inputProps={{
             onKeyDown: handleKeyDown,
             ...restInputProps
@@ -317,6 +344,7 @@ TextFieldChips.defaultProps = {
   addOnWhichKey: KEYBOARD_KEY.enter,
   onDeleteChip: () => {},
   onAddChip: () => {},
+  inputValue: undefined,
   onEditChip: () => {},
   renderChip: undefined,
   onDeleteAllChips: () => {},

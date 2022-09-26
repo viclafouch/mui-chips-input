@@ -34,6 +34,7 @@ const MuiChipsInput = React.forwardRef(
       renderChip,
       disableEdition,
       addOnWhichKey,
+      inputValue,
       ...restTextFieldProps
     } = props as Required<MuiChipsInputProps>
 
@@ -86,6 +87,7 @@ const MuiChipsInput = React.forwardRef(
         disabled={disabled}
         disableEdition={disableEdition}
         validate={validate}
+        inputValue={inputValue}
         hideClearAll={hideClearAll}
         addOnWhichKey={addOnWhichKey}
         {...restTextFieldProps}

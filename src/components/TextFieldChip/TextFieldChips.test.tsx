@@ -340,4 +340,21 @@ describe('components/TextFieldChips', () => {
 
     expect(screen.getByTestId('EmailIcon')).toBeTruthy()
   })
+
+  test('should control the input value', async () => {
+    const callbackOnInputChange = vi.fn(() => {})
+    render(
+      <TextFieldChips
+        chips={['test']}
+        onInputChange={callbackOnInputChange}
+        inputValue="Hello world"
+      />
+    )
+
+    expect(testUtils.getInputElement().value).toBe('Hello world')
+
+    await testUtils.typeInInputElement(' ')
+
+    expect(callbackOnInputChange).toBeCalledWith('Hello world ')
+  })
 })
