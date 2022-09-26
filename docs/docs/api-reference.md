@@ -104,6 +104,17 @@ const handleInputChange = (inputValue) => {
 <MuiChipsInput onInputChange={handleInputChange} />
 ```
 
+## `inputValue`
+
+- Type: `string`
+- Default: `undefined`
+
+In case if you need to control the input value. Otherwise, the component will be uncontrolled.
+
+```tsx
+<MuiChipsInput inputValue="" />
+```
+
 ## `clearInputOnBlur`
 
 - Type: `boolean`
