@@ -2,7 +2,6 @@ import React from 'react'
 import TextFieldChips from '@components/TextFieldChip/TextFieldChips'
 import { KEYBOARD_KEY } from '@shared/constants/event'
 import { append, removeIndex, updateIndex } from '@shared/helpers/array'
-
 import type {
   MuiChipsInputChip,
   MuiChipsInputChipComponent,

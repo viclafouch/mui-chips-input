@@ -1,10 +1,8 @@
 import React from 'react'
-import { render, screen } from '@testing-library/react'
 import { vi } from 'vitest'
-
+import { render, screen } from '@testing-library/react'
 import { MuiChipsInput, MuiChipsInputProps } from './index'
 import * as testUtils from './testUtils'
-
 import '@testing-library/jest-dom'
 
 const MuiChipsInputControlled = (props: Partial<MuiChipsInputProps>) => {

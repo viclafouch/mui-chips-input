@@ -1,13 +1,12 @@
 import React from 'react'
+import Chip from '@components/Chip/Chip'
 import CloseIcon from '@mui/icons-material/Close'
 import ClickAwayListener from '@mui/material/ClickAwayListener'
 import IconButton from '@mui/material/IconButton'
 import type { TextFieldProps } from '@mui/material/TextField'
-import Chip from '@components/Chip/Chip'
 import { KEYBOARD_KEY } from '@shared/constants/event'
 import { matchIsBoolean } from '@shared/helpers/boolean'
 import { assocRefToPropRef } from '@shared/helpers/ref'
-
 import type {
   MuiChipsInputChip,
   MuiChipsInputChipComponent,

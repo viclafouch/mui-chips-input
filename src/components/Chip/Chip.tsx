@@ -1,6 +1,5 @@
 import React from 'react'
 import { KEYBOARD_KEY } from '@shared/constants/event'
-
 import type { MuiChipsInputChipProps } from '../../index.types'
 import Styled from './Chip.styled'
 

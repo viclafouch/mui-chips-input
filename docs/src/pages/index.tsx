@@ -1,13 +1,11 @@
 import React from 'react'
+import clsx from 'clsx'
+import { MuiChipsInput } from 'mui-chips-input'
 import Link from '@docusaurus/Link'
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
 import DocusaurusImageUrl from '@site/static/img/logo.png'
 import Layout from '@theme/Layout'
-import clsx from 'clsx'
-import { MuiChipsInput } from 'mui-chips-input'
-
 import styles from './index.module.css'
-
 import '../css/index.css'
 
 const HomepageHeader = () => {

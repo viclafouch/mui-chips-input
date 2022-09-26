@@ -1,12 +1,10 @@
 import React from 'react'
+import { vi } from 'vitest'
 import EmailIcon from '@mui/icons-material/Email'
 import { fireEvent, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { vi } from 'vitest'
-
 import * as testUtils from '../../testUtils'
 import TextFieldChips from './TextFieldChips'
-
 import '@testing-library/jest-dom'
 
 describe('components/TextFieldChips', () => {
