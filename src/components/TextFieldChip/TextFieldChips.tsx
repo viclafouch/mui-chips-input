@@ -4,7 +4,7 @@ import CloseIcon from '@mui/icons-material/Close'
 import ClickAwayListener from '@mui/material/ClickAwayListener'
 import IconButton from '@mui/material/IconButton'
 import type { TextFieldProps } from '@mui/material/TextField'
-import { KEYBOARD_KEY } from '@shared/constants/event'
+import { KEYBOARD_KEY, KEYBOARD_KEYCODE } from '@shared/constants/event'
 import { matchIsBoolean } from '@shared/helpers/boolean'
 import { assocRefToPropRef } from '@shared/helpers/ref'
 import type {
@@ -185,7 +185,11 @@ const TextFieldChips = React.forwardRef(
       })
     }
 
-    const matchIsValidKeyToAdd = (eventKey: string) => {
+    const matchIsValidKeyToAdd = (eventKey: string, eventKeyCode: number) => {
+      if (eventKeyCode === KEYBOARD_KEYCODE.ime) {
+        return false
+      }
+
       if (addOnWhichKey) {
         if (Array.isArray(addOnWhichKey)) {
           return addOnWhichKey.some((key) => {
@@ -199,7 +203,7 @@ const TextFieldChips = React.forwardRef(
     }
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-      const isKeyIsAdd = matchIsValidKeyToAdd(event.key)
+      const isKeyIsAdd = matchIsValidKeyToAdd(event.key, event.keyCode)
       const isBackspace = event.key === KEYBOARD_KEY.backspace
       const inputValueTrimed = inputValue.trim()
 
