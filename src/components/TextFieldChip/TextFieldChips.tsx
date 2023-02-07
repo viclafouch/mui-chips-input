@@ -207,6 +207,11 @@ const TextFieldChips = React.forwardRef(
       const isBackspace = event.key === KEYBOARD_KEY.backspace
       const inputValueTrimed = inputValue.trim()
 
+      if (event.code === 'Tab') {
+        handleClickAway()
+        return
+      }
+
       if (isKeyIsAdd) {
         event.preventDefault()
       }
