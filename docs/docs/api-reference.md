@@ -150,14 +150,14 @@ By default, if the input field is empty and the user presses the delete key, the
 
 ## `renderChip`
 
-- Type: `(ChipComponent: MuiChipsInputChipComponent, ChipProps: MuiChipsInputChipProps) => JSX.Element`
+- Type: `(ChipComponent: MuiChipsInputChipComponent, key: React.Key, ChipProps: MuiChipsInputChipProps) => JSX.Element`
 - Default: `undefined`
 
 Custom how to render a Chip element in case if you want to add / edit the [Chip props](https://mui.com/material-ui/api/chip/).
 
 ```tsx
-<MuiChipsInput renderChip={(Component, props) => {
-  return <Component {...props} deleteIcon={<FaceIcon />} />
+<MuiChipsInput renderChip={(Component, key, props) => {
+  return <Component {...props} key={key} deleteIcon={<FaceIcon />} />
 }} />
 ```
 
