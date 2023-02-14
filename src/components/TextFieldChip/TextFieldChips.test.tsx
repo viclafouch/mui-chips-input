@@ -330,8 +330,14 @@ describe('components/TextFieldChips', () => {
     render(
       <TextFieldChips
         chips={['test']}
-        renderChip={(ChipComponent, ChipProps) => {
-          return <ChipComponent {...ChipProps} deleteIcon={<EmailIcon />} />
+        renderChip={(ChipComponent, key, ChipProps) => {
+          return (
+            <ChipComponent
+              key={key}
+              {...ChipProps}
+              deleteIcon={<EmailIcon />}
+            />
+          )
         }}
       />
     )

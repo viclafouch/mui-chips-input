@@ -31,6 +31,7 @@ type TextFieldChipsProps = TextFieldProps & {
   onDeleteAllChips?: () => void
   renderChip?: (
     ChipComponent: MuiChipsInputChipComponent,
+    key: React.Key,
     ChipProps: MuiChipsInputChipProps
   ) => JSX.Element
 }
@@ -300,8 +301,8 @@ const TextFieldChips = React.forwardRef(
             inputRef: handleRef,
             startAdornment: hasAtLeastOneChip
               ? chips.map((chip, index) => {
+                  const key = `chip-${index}`
                   const ChipProps: MuiChipsInputChipProps = {
-                    key: `chip-${index}`,
                     index,
                     onEdit: handleEdit,
                     label: chip,
@@ -313,9 +314,9 @@ const TextFieldChips = React.forwardRef(
                     onDelete: handleDeleteChip
                   }
                   return renderChip ? (
-                    renderChip(Chip, ChipProps)
+                    renderChip(Chip, key, ChipProps)
                   ) : (
-                    <Chip {...ChipProps} />
+                    <Chip {...ChipProps} key={key} />
                   )
                 })
               : null,

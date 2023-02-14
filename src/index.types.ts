@@ -1,3 +1,4 @@
+import React from 'react'
 import type { ChipProps as MuiChipProps } from '@mui/material/Chip'
 import type { TextFieldProps as MuiTextFieldProps } from '@mui/material/TextField'
 
@@ -7,7 +8,6 @@ type TextFieldProps = Omit<
 >
 
 export type MuiChipsInputChipProps = MuiChipProps & {
-  key: string
   index: number
   label: string
   title: string
@@ -35,6 +35,7 @@ export interface BaseMuiChipsInputProps {
   addOnWhichKey?: string[] | string
   renderChip?: (
     ChipComponent: MuiChipsInputChipComponent,
+    key: React.Key,
     ChipProps: MuiChipsInputChipProps
   ) => JSX.Element
   clearInputOnBlur?: boolean
