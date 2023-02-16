@@ -6,6 +6,7 @@ import IconButton from '@mui/material/IconButton'
 import type { TextFieldProps } from '@mui/material/TextField'
 import { KEYBOARD_KEY, KEYBOARD_KEYCODE } from '@shared/constants/event'
 import { matchIsBoolean } from '@shared/helpers/boolean'
+import { matchIsObject } from '@shared/helpers/object'
 import { assocRefToPropRef } from '@shared/helpers/ref'
 import type {
   MuiChipsInputChip,
@@ -69,7 +70,7 @@ const TextFieldChips = React.forwardRef(
     const [inputValueUncontrolled, setInputValueUncontrolled] =
       React.useState<string>('')
     const [textError, setTextError] = React.useState<string>('')
-    const inputElRef = React.useRef<HTMLDivElement | null>(null)
+    const inputElRef = React.useRef<HTMLInputElement>()
     const isFocusingRef = React.useRef<boolean>(false)
     const isControlledRef = React.useRef(
       typeof inputValueControlled === 'string'
@@ -79,6 +80,7 @@ const TextFieldChips = React.forwardRef(
     >(null)
     const { onKeyDown, ...restInputProps } = inputProps || {}
     const { inputRef, ...restIInputProps } = InputProps || {}
+    const { inputRef: userInputRef } = props || {}
 
     const clearTextError = () => {
       setTextError('')
@@ -129,9 +131,17 @@ const TextFieldChips = React.forwardRef(
       isFocusingRef.current = false
     }
 
-    const handleRef = (ref: HTMLDivElement | null): void => {
-      // @ts-ignore
-      inputElRef.current = ref
+    const handleRef = (ref: HTMLInputElement): void => {
+      if (
+        userInputRef &&
+        matchIsObject(userInputRef) &&
+        'current' in userInputRef
+      ) {
+        ;(userInputRef as React.MutableRefObject<HTMLInputElement>).current =
+          ref
+      } else {
+        inputElRef.current = ref
+      }
       if (propRef) {
         assocRefToPropRef(ref, propRef)
       }
@@ -264,7 +274,13 @@ const TextFieldChips = React.forwardRef(
         updateChipIndexEditable(chipIndex)
       }
 
-      inputElRef.current?.focus()
+      if (userInputRef) {
+        ;(
+          userInputRef as React.MutableRefObject<HTMLInputElement>
+        ).current?.focus()
+      } else {
+        inputElRef.current?.focus()
+      }
     }
 
     const handleDeleteChip = (chipIndex: number) => {

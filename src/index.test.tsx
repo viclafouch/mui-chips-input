@@ -28,6 +28,14 @@ describe('components/MuiChipsInput', () => {
     expect(screen.getByTitle('bar')).toBeTruthy()
   })
 
+  test('should accept users inputRef', () => {
+    const inputRef = React.createRef<HTMLInputElement>()
+
+    render(<MuiChipsInput inputRef={inputRef} inputValue="good dogo" />)
+    const input = screen.getByDisplayValue('good dogo')
+    expect(inputRef.current).toBe(input)
+  })
+
   test('should call onAddChip when new chip is added', async () => {
     const callbackOnAddChip = vi.fn(() => {})
     render(<MuiChipsInputControlled onAddChip={callbackOnAddChip} />)
