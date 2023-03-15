@@ -57,6 +57,7 @@ const TextFieldChips = React.forwardRef(
       hideClearAll,
       inputProps,
       size,
+      required,
       disableDeleteOnBackspace,
       disableEdition,
       className,
@@ -288,6 +289,7 @@ const TextFieldChips = React.forwardRef(
           ref={propRef}
           className={`MuiChipsInput-TextField ${className || ''}`}
           size={size}
+          required={required}
           placeholder="Type and press enter"
           onFocus={handleFocus}
           inputProps={{
