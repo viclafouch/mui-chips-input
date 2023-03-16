@@ -123,4 +123,12 @@ describe('components/MuiChipsInput', () => {
     expect(callbackOnChange).not.toHaveBeenCalled()
     expect(callbackOnAdd).not.toHaveBeenCalled()
   })
+
+  test('should assign inputRef to the input element', () => {
+    const inputRef = React.createRef<HTMLInputElement>()
+
+    render(<MuiChipsInput inputRef={inputRef} inputValue="good dogo" />)
+    const input = screen.getByDisplayValue('good dogo')
+    expect(inputRef.current).toBe(input)
+  })
 })

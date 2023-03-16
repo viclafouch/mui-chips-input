@@ -63,6 +63,7 @@ const TextFieldChips = React.forwardRef(
       renderChip,
       addOnWhichKey,
       onFocus,
+      inputRef: inputRefFromProp,
       inputValue: inputValueControlled,
       ...restTextFieldProps
     } = props
@@ -132,6 +133,9 @@ const TextFieldChips = React.forwardRef(
     const handleRef = (ref: HTMLDivElement | null): void => {
       // @ts-ignore
       inputElRef.current = ref
+      if (inputRefFromProp) {
+        assocRefToPropRef(ref, inputRefFromProp)
+      }
       if (propRef) {
         assocRefToPropRef(ref, propRef)
       }
