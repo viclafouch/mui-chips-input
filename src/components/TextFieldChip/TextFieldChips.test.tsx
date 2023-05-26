@@ -138,7 +138,7 @@ describe('components/TextFieldChips', () => {
     expect(callbackOnInputChange).toHaveBeenCalledWith('')
   })
 
-  test('should not clear input on blur when no clearInputOnBlur', async () => {
+  test('should add chip on blur when no clearInputOnBlur', async () => {
     const callbackOnInputChange = vi.fn(() => {})
     render(
       <TextFieldChips chips={['test']} onInputChange={callbackOnInputChange} />
@@ -146,12 +146,9 @@ describe('components/TextFieldChips', () => {
 
     expect(testUtils.getInputElement().value).toBe('')
     await testUtils.typeInInputElement('foo')
-    expect(testUtils.getInputElement().value).toBe('foo')
-    expect(callbackOnInputChange).toHaveBeenCalledTimes(3)
     fireEvent.click(document)
-
-    expect(testUtils.getInputElement().value).toBe('foo')
-    expect(callbackOnInputChange).toHaveBeenCalledTimes(3)
+    expect(testUtils.getInputElement().value).toBe('')
+    expect(callbackOnInputChange).toHaveBeenCalledTimes(4)
   })
 
   test('should show error text on validation failed', async () => {
