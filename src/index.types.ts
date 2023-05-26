@@ -45,6 +45,7 @@ export interface BaseMuiChipsInputProps {
   validate?: (
     chipValue: MuiChipsInputChip
   ) => boolean | { isError: boolean; textError: string }
+  placeholderText?: string
 }
 
 export type MuiChipsInputProps = TextFieldProps & BaseMuiChipsInputProps

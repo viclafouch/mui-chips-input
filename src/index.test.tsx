@@ -131,4 +131,9 @@ describe('components/MuiChipsInput', () => {
     const input = screen.getByDisplayValue('good dogo')
     expect(inputRef.current).toBe(input)
   })
+
+  test('should display custom placeholder test', () => {
+    render(<MuiChipsInput placeholderText="foo" />)
+    expect(testUtils.getInputElement().placeholder).toBe('foo')
+  })
 })

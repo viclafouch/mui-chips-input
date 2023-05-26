@@ -34,6 +34,7 @@ type TextFieldChipsProps = TextFieldProps & {
     key: React.Key,
     ChipProps: MuiChipsInputChipProps
   ) => JSX.Element
+  placeholderText?: string
 }
 
 const TextFieldChips = React.forwardRef(
@@ -63,6 +64,7 @@ const TextFieldChips = React.forwardRef(
       renderChip,
       addOnWhichKey,
       onFocus,
+      placeholderText,
       inputRef: inputRefFromProp,
       inputValue: inputValueControlled,
       ...restTextFieldProps
@@ -292,7 +294,7 @@ const TextFieldChips = React.forwardRef(
           ref={propRef}
           className={`MuiChipsInput-TextField ${className || ''}`}
           size={size}
-          placeholder="Type and press enter"
+          placeholder={placeholderText}
           onFocus={handleFocus}
           inputProps={{
             onKeyDown: handleKeyDown,
@@ -363,7 +365,8 @@ TextFieldChips.defaultProps = {
   onDeleteAllChips: () => {},
   validate: () => {
     return true
-  }
+  },
+  placeholderText: 'Type and press enter'
 }
 
 export default TextFieldChips
