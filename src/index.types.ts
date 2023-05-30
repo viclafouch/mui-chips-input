@@ -38,7 +38,6 @@ export interface BaseMuiChipsInputProps {
     key: React.Key,
     ChipProps: MuiChipsInputChipProps
   ) => JSX.Element
-  clearInputOnBlur?: boolean
   hideClearAll?: boolean
   disableEdition?: boolean
   disableDeleteOnBackspace?: boolean
@@ -47,4 +46,21 @@ export interface BaseMuiChipsInputProps {
   ) => boolean | { isError: boolean; textError: string }
 }
 
-export type MuiChipsInputProps = TextFieldProps & BaseMuiChipsInputProps
+// Discriminated union which allows ClearOnBlur or AddOnBlur, but not both, or neither
+type ChipInputBlurBehavior =
+  | {
+      clearInputOnBlur: true
+      addOnBlur?: never
+    }
+  | {
+      clearInputOnBlur?: never
+      addOnBlur: true
+    }
+  | {
+      clearInputOnBlur?: false
+      addOnBlur?: false
+    }
+
+export type MuiChipsInputProps = TextFieldProps &
+  BaseMuiChipsInputProps &
+  ChipInputBlurBehavior
