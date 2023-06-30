@@ -1,6 +1,6 @@
 <div align="center">
-<h1>MUI chips input</h1>
-  <p>A chips input designed for the React library <a href="https://mui.com/">MUI</a></p>
+<h1>Material UI chips input</h1>
+  <p>A chips input designed for the React library <a href="https://material-ui.com/">Material UI</a></p>
 </div>
 <div align="center">
 
@@ -47,7 +47,7 @@ const MyComponent = () => {
 
 ## Changelog
 
-Go to [Github Releases](https://github.com/viclafouch/mui-chips-input/releases)
+Go to [GitHub Releases](https://github.com/viclafouch/mui-chips-input/releases)
 
 ## TypeScript
 
