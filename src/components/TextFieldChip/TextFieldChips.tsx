@@ -175,26 +175,16 @@ const TextFieldChips = React.forwardRef(
         clearChipIndexEditable()
         clearInputValue()
       } else if (addOnBlur) {
-        const inputValueTrimed = inputValue.trim()
         if (inputValue.length > 0) {
-          if (inputValueTrimed.length === 0) {
+          const inputValueTrimmed = inputValue.trim()
+          if (inputValueTrimmed.length === 0) {
             clearInputValue()
           } else if (chipIndexEditable !== null) {
-            updateChip(inputValueTrimed, chipIndexEditable)
+            updateChip(inputValueTrimmed, chipIndexEditable)
           } else {
-            addChip(inputValueTrimed)
+            addChip(inputValueTrimmed)
           }
-        } else if (
-          inputValue.length === 0 &&
-          chips.length > 0 &&
-          !disableDeleteOnBackspace
-        ) {
-          const chipIndex = chips.length - 1
-          onDeleteChip?.(chipIndex)
-          if (chipIndexEditable === chipIndex) {
-            clearChipIndexEditable()
-          }
-        }
+        } 
       } else if (clearInputOnBlur) {
         clearInputValue()
       }
