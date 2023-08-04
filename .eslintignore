@@ -2,3 +2,5 @@ vite.config.ts
 dist
 coverage
 docs/build
+.eslintrc.js
+docs/*.js

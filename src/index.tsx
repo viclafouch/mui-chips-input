@@ -10,10 +10,10 @@ import type {
 } from './index.types'
 
 export {
-  MuiChipsInputProps,
   MuiChipsInputChip,
+  MuiChipsInputChipComponent,
   MuiChipsInputChipProps,
-  MuiChipsInputChipComponent
+  MuiChipsInputProps
 }
 
 const MuiChipsInput = React.forwardRef(
@@ -42,6 +42,7 @@ const MuiChipsInput = React.forwardRef(
       if (disabled) {
         return
       }
+
       const newValue = append(value, chipValue)
       const newIndex = newValue.length - 1
 
@@ -53,6 +54,7 @@ const MuiChipsInput = React.forwardRef(
       if (disabled) {
         return
       }
+
       const chip = value[chipIndex]
       onChange?.(removeIndex(value, chipIndex))
       onDeleteChip?.(chip, chipIndex)
@@ -65,6 +67,7 @@ const MuiChipsInput = React.forwardRef(
       if (disabled || disableEdition) {
         return
       }
+
       onChange?.(updateIndex(value, chipIndex, chipValue))
       onEditChip?.(chipValue, chipIndex)
     }

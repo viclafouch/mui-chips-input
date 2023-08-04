@@ -31,10 +31,12 @@ const Chip = (props: ChipProps) => {
 
   const handleDoubleClick = (event: React.MouseEvent) => {
     const target = event.target as HTMLElement
+
     // Return if click on a svg icon
     if (target.textContent !== restChipProps.label) {
       return
     }
+
     if (!disabled) {
       onEdit(index)
     }

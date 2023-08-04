@@ -5,6 +5,7 @@ import userEvent from '@testing-library/user-event'
 export function getInputElement() {
   return screen.getByRole<HTMLInputElement>('textbox')
 }
+
 export function getClearAllButton() {
   return screen.queryByTestId('CloseIcon')
 }
@@ -14,6 +15,7 @@ export async function typeInInputElement(
 ): Promise<{ result: string }> {
   const inputElement = getInputElement()
   await userEvent.type(inputElement, value, { delay: 1 })
+
   return { result: inputElement.value }
 }
 

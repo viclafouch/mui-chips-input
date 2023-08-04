@@ -94,6 +94,7 @@ const TextFieldChips = React.forwardRef(
 
     const updateInputValue = (newInputValue: string) => {
       onInputChange?.(newInputValue)
+
       if (!isControlled) {
         setInputValueUncontrolled(newInputValue)
       }
@@ -125,16 +126,21 @@ const TextFieldChips = React.forwardRef(
       return (callback: () => void) => {
         if (typeof validate === 'function') {
           const validation = validate(chipValue)
+
           if (validation === false) {
             event?.preventDefault()
+
             return
           }
+
           if (!matchIsBoolean(validation) && validation.isError) {
             event?.preventDefault()
             setTextError(validation.textError)
+
             return
           }
         }
+
         callback()
       }
     }
@@ -171,12 +177,14 @@ const TextFieldChips = React.forwardRef(
       if (!isFocusingRef.current) {
         return
       }
+
       if (chipIndexEditable !== null) {
         clearChipIndexEditable()
         clearInputValue()
       } else if (addOnBlur) {
         if (inputValue.length > 0) {
           const inputValueTrimmed = inputValue.trim()
+
           if (inputValueTrimmed.length === 0) {
             clearInputValue()
           } else if (chipIndexEditable !== null) {
@@ -184,7 +192,7 @@ const TextFieldChips = React.forwardRef(
           } else {
             addChip(inputValueTrimmed)
           }
-        } 
+        }
       } else if (clearInputOnBlur) {
         clearInputValue()
       }
@@ -194,9 +202,11 @@ const TextFieldChips = React.forwardRef(
 
     const handleRef = (ref: HTMLDivElement | null): void => {
       inputElRef.current = ref
+
       if (inputRefFromProp) {
         assocRefToPropRef(ref, inputRefFromProp)
       }
+
       if (propRef) {
         assocRefToPropRef(ref, propRef)
       }
@@ -213,6 +223,7 @@ const TextFieldChips = React.forwardRef(
             return key === eventKey
           })
         }
+
         return addOnWhichKey === eventKey
       }
 
@@ -226,6 +237,7 @@ const TextFieldChips = React.forwardRef(
 
       if (!isKeyIsAdd && event.code === 'Tab') {
         handleClickAway()
+
         return
       }
 
@@ -249,6 +261,7 @@ const TextFieldChips = React.forwardRef(
       ) {
         const chipIndex = chips.length - 1
         onDeleteChip?.(chipIndex)
+
         if (chipIndexEditable === chipIndex) {
           clearChipIndexEditable()
         }
@@ -265,6 +278,7 @@ const TextFieldChips = React.forwardRef(
 
     const handleClearAll = (event: React.MouseEvent<HTMLButtonElement>) => {
       event.preventDefault()
+
       if (!hideClearAll && !disabled) {
         onDeleteAllChips?.()
         clearInputValue()
@@ -287,7 +301,9 @@ const TextFieldChips = React.forwardRef(
       if (disabled) {
         return
       }
+
       onDeleteChip?.(chipIndex)
+
       if (chipIndexEditable !== null) {
         clearChipIndexEditable()
         clearInputValue()
@@ -329,6 +345,7 @@ const TextFieldChips = React.forwardRef(
                     disableEdition,
                     onDelete: handleDeleteChip
                   }
+
                   return renderChip ? (
                     renderChip(Chip, key, ChipProps)
                   ) : (
