@@ -16,10 +16,12 @@ export {
   MuiChipsInputProps
 }
 
+const defaultValue: MuiChipsInputProps['value'] = []
+
 const MuiChipsInput = React.forwardRef(
-  (props: MuiChipsInputProps, propRef: MuiChipsInputProps['ref']) => {
-    const {
-      value,
+  (
+    {
+      value = defaultValue,
       onChange,
       onAddChip,
       onInputChange,
@@ -33,11 +35,12 @@ const MuiChipsInput = React.forwardRef(
       onEditChip,
       renderChip,
       disableEdition,
-      addOnWhichKey,
+      addOnWhichKey = KEYBOARD_KEY.enter,
       inputValue,
       ...restTextFieldProps
-    } = props as Required<MuiChipsInputProps>
-
+    }: MuiChipsInputProps,
+    propRef: MuiChipsInputProps['ref']
+  ) => {
     const handleAddChip = (chipValue: MuiChipsInputChip) => {
       if (disabled) {
         return
@@ -100,23 +103,5 @@ const MuiChipsInput = React.forwardRef(
     )
   }
 )
-
-MuiChipsInput.defaultProps = {
-  value: [],
-  onChange: () => {},
-  onAddChip: () => {},
-  onDeleteChip: () => {},
-  onInputChange: () => {},
-  onEditChip: () => {},
-  addOnWhichKey: KEYBOARD_KEY.enter,
-  clearInputOnBlur: false,
-  addOnBlur: false,
-  disableEdition: false,
-  hideClearAll: false,
-  disableDeleteOnBackspace: false,
-  validate: () => {
-    return true
-  }
-}
 
 export { MuiChipsInput }

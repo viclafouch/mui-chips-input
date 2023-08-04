@@ -5,18 +5,16 @@ import Styled from './Chip.styled'
 
 type ChipProps = MuiChipsInputChipProps
 
-const Chip = (props: ChipProps) => {
-  const {
-    className,
-    index,
-    onDelete,
-    disabled,
-    onEdit,
-    isEditing,
-    disableEdition,
-    ...restChipProps
-  } = props
-
+const Chip = ({
+  className,
+  index,
+  onDelete,
+  disabled,
+  onEdit,
+  isEditing,
+  disableEdition,
+  ...restChipProps
+}: ChipProps) => {
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.key === KEYBOARD_KEY.enter) {
       onDelete(index)

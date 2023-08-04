@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 import React from 'react'
 import Chip from '@components/Chip/Chip'
 import CloseIcon from '@mui/icons-material/Close'
@@ -39,15 +40,11 @@ type TextFieldChipsProps = TextFieldProps & {
 
 const TextFieldChips = React.forwardRef(
   (
-    props: TextFieldChipsProps,
-    propRef: TextFieldChipsProps['ref']
-  ): React.ReactElement => {
-    const {
+    {
       chips,
       onAddChip,
       onEditChip,
       onDeleteChip,
-      onDeleteAllChips,
       InputProps,
       onInputChange,
       disabled,
@@ -65,10 +62,13 @@ const TextFieldChips = React.forwardRef(
       renderChip,
       addOnWhichKey,
       onFocus,
+      onDeleteAllChips,
       inputRef: inputRefFromProp,
       inputValue: inputValueControlled,
       ...restTextFieldProps
-    } = props
+    }: TextFieldChipsProps,
+    propRef: TextFieldChipsProps['ref']
+  ): React.ReactElement => {
     const [inputValueUncontrolled, setInputValueUncontrolled] =
       React.useState<string>('')
     const [textError, setTextError] = React.useState<string>('')
@@ -376,24 +376,5 @@ const TextFieldChips = React.forwardRef(
     )
   }
 )
-
-TextFieldChips.defaultProps = {
-  onInputChange: () => {},
-  clearInputOnBlur: false,
-  addOnBlur: false,
-  hideClearAll: false,
-  disableDeleteOnBackspace: false,
-  disableEdition: false,
-  addOnWhichKey: KEYBOARD_KEY.enter,
-  onDeleteChip: () => {},
-  onAddChip: () => {},
-  inputValue: undefined,
-  onEditChip: () => {},
-  renderChip: undefined,
-  onDeleteAllChips: () => {},
-  validate: () => {
-    return true
-  }
-}
 
 export default TextFieldChips
