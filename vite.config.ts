@@ -29,6 +29,7 @@ export default defineConfig({
       fileName: format => `mui-chips-input.${format}.js`
     },
     rollupOptions: {
+      external: ['@mui/base/ClickAwayListener'],
       output: {
         sourcemapExcludeSources: true,
         globals: {
