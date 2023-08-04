@@ -161,6 +161,17 @@ Custom how to render a Chip element in case if you want to add / edit the [Chip 
 }} />
 ```
 
+## `addOnBlur`
+
+- Type: `boolean` | `undefined`
+- Default: `undefined`
+
+Enable this option to add a chip when the input element loses focus.
+
+```tsx
+<MuiChipsInput addOnBlur />
+```
+
 ## `validate`
 
 - Type: `(chipValue: string) => boolean | { isError: boolean; textError: string }`
