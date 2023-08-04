@@ -20,6 +20,7 @@ type TextFieldChipsProps = TextFieldProps & {
   onAddChip?: (chip: MuiChipsInputChip) => void
   onEditChip?: (chip: MuiChipsInputChip, chipIndex: number) => void
   clearInputOnBlur?: boolean
+  addOnBlur?: boolean
   hideClearAll?: boolean
   disableDeleteOnBackspace?: boolean
   addOnWhichKey?: string | string[]
@@ -51,6 +52,7 @@ const TextFieldChips = React.forwardRef(
       onInputChange,
       disabled,
       clearInputOnBlur,
+      addOnBlur,
       validate,
       error,
       helperText,
@@ -116,44 +118,19 @@ const TextFieldChips = React.forwardRef(
       updateInputValue(event.target.value)
     }
 
-    const handleClickAway = () => {
-      if (!isFocusingRef.current) {
-        return
-      }
-      if (chipIndexEditable !== null) {
-        clearChipIndexEditable()
-        clearInputValue()
-      } else if (clearInputOnBlur) {
-        clearInputValue()
-      }
-
-      isFocusingRef.current = false
-    }
-
-    const handleRef = (ref: HTMLDivElement | null): void => {
-      // @ts-ignore
-      inputElRef.current = ref
-      if (inputRefFromProp) {
-        assocRefToPropRef(ref, inputRefFromProp)
-      }
-      if (propRef) {
-        assocRefToPropRef(ref, propRef)
-      }
-    }
-
     const validationGuard = (
       chipValue: MuiChipsInputChip,
-      event: React.KeyboardEvent<HTMLInputElement>
+      event?: React.KeyboardEvent<HTMLInputElement>
     ) => {
       return (callback: () => void) => {
         if (typeof validate === 'function') {
           const validation = validate(chipValue)
           if (validation === false) {
-            event.preventDefault()
+            event?.preventDefault()
             return
           }
           if (!matchIsBoolean(validation) && validation.isError) {
-            event.preventDefault()
+            event?.preventDefault()
             setTextError(validation.textError)
             return
           }
@@ -165,7 +142,7 @@ const TextFieldChips = React.forwardRef(
     const updateChip = (
       chipValue: MuiChipsInputChip,
       chipIndex: number,
-      event: React.KeyboardEvent<HTMLInputElement>
+      event?: React.KeyboardEvent<HTMLInputElement>
     ) => {
       validationGuard(
         chipValue,
@@ -179,7 +156,7 @@ const TextFieldChips = React.forwardRef(
 
     const addChip = (
       chipValue: MuiChipsInputChip,
-      event: React.KeyboardEvent<HTMLInputElement>
+      event?: React.KeyboardEvent<HTMLInputElement>
     ) => {
       validationGuard(
         chipValue,
@@ -188,6 +165,41 @@ const TextFieldChips = React.forwardRef(
         onAddChip?.(inputValue.trim())
         clearInputValue()
       })
+    }
+
+    const handleClickAway = () => {
+      if (!isFocusingRef.current) {
+        return
+      }
+      if (chipIndexEditable !== null) {
+        clearChipIndexEditable()
+        clearInputValue()
+      } else if (addOnBlur) {
+        if (inputValue.length > 0) {
+          const inputValueTrimmed = inputValue.trim()
+          if (inputValueTrimmed.length === 0) {
+            clearInputValue()
+          } else if (chipIndexEditable !== null) {
+            updateChip(inputValueTrimmed, chipIndexEditable)
+          } else {
+            addChip(inputValueTrimmed)
+          }
+        } 
+      } else if (clearInputOnBlur) {
+        clearInputValue()
+      }
+
+      isFocusingRef.current = false
+    }
+
+    const handleRef = (ref: HTMLDivElement | null): void => {
+      inputElRef.current = ref
+      if (inputRefFromProp) {
+        assocRefToPropRef(ref, inputRefFromProp)
+      }
+      if (propRef) {
+        assocRefToPropRef(ref, propRef)
+      }
     }
 
     const matchIsValidKeyToAdd = (eventKey: string, eventKeyCode: number) => {
@@ -351,6 +363,7 @@ const TextFieldChips = React.forwardRef(
 TextFieldChips.defaultProps = {
   onInputChange: () => {},
   clearInputOnBlur: false,
+  addOnBlur: false,
   hideClearAll: false,
   disableDeleteOnBackspace: false,
   disableEdition: false,

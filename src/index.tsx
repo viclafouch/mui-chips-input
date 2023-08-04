@@ -27,6 +27,7 @@ const MuiChipsInput = React.forwardRef(
       disabled,
       validate,
       clearInputOnBlur,
+      addOnBlur,
       hideClearAll,
       disableDeleteOnBackspace,
       onEditChip,
@@ -83,6 +84,7 @@ const MuiChipsInput = React.forwardRef(
         renderChip={renderChip}
         onDeleteAllChips={handleDeleteAllChips}
         clearInputOnBlur={clearInputOnBlur}
+        addOnBlur={addOnBlur}
         disabled={disabled}
         disableEdition={disableEdition}
         validate={validate}
@@ -105,6 +107,7 @@ MuiChipsInput.defaultProps = {
   onEditChip: () => {},
   addOnWhichKey: KEYBOARD_KEY.enter,
   clearInputOnBlur: false,
+  addOnBlur: false,
   disableEdition: false,
   hideClearAll: false,
   disableDeleteOnBackspace: false,
