@@ -11,13 +11,13 @@
   "files": [
     "dist"
   ],
-  "main": "./dist/mui-chips-input.umd.js",
-  "module": "./dist/mui-chips-input.es.js",
+  "main": "./dist/mui-chips-input.es.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "import": "./dist/mui-chips-input.es.js",
-      "require": "./dist/mui-chips-input.umd.js"
+      "default": "./dist/mui-chips-input.es.js",
+      "types": "./dist/index.d.ts"
     }
   },
   "repository": {
@@ -55,10 +55,11 @@
     }
   },
   "peerDependencies": {
-    "@mui/icons-material": "^5.0.0",
     "@emotion/react": "^11.5.0",
     "@emotion/styled": "^11.3.0",
+    "@mui/icons-material": "^5.0.0",
     "@mui/material": "^5.0.0",
+    "@mui/base": "^5.0.0-beta.9",
     "@types/react": "^18.0.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0"
@@ -70,24 +71,23 @@
   },
   "devDependencies": {
     "@babel/core": "^7.22.9",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.14.3",
+    "@mui/material": "^5.14.3",
+    "@mui/base": "^5.0.0-beta.9",
     "@storybook/addon-actions": "^7.2.1",
     "@storybook/addon-essentials": "^7.2.1",
     "@storybook/addon-interactions": "^7.2.1",
     "@storybook/addon-links": "^7.2.1",
     "@storybook/react": "^7.2.1",
-    "@emotion/react": "^11.11.1",
-    "@emotion/styled": "^11.11.0",
-    "@mui/icons-material": "^5.14.3",
-    "@mui/material": "^5.14.3",
-    "@types/react": "^18.2.18",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
     "@storybook/react-vite": "^7.2.1",
     "@storybook/testing-library": "^0.2.0",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.4.3",
     "@types/node": "^20.4.7",
+    "@types/react": "^18.2.18",
     "@viclafouch/eslint-config-viclafouch": "^4.1.1",
     "@vitejs/plugin-react": "^4.0.4",
     "@vitest/coverage-c8": "^0.31.1",
@@ -96,6 +96,8 @@
     "husky": "^8.0.3",
     "jsdom": "^22.1.0",
     "prettier": "^3.0.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "standard-version": "^9.5.0",
     "storybook": "^7.2.1",

@@ -23,6 +23,7 @@ export default defineConfig({
     target: 'esnext',
     minify: true,
     lib: {
+      formats: ['es'],
       entry: path.resolve(__dirname, 'src/index.tsx'),
       name: 'mui-chips-input',
       fileName: format => `mui-chips-input.${format}.js`
@@ -33,9 +34,9 @@ export default defineConfig({
         globals: {
           react: 'React',
           '@mui/material/TextField': 'TextField',
-          '@mui/icons-material/Close': 'CloseIcon',
+          '@mui/icons-material/Close': 'Close',
           '@mui/material/IconButton': 'IconButton',
-          '@mui/material/ClickAwayListener': 'ClickAwayListener',
+          '@mui/base/ClickAwayListener': 'ClickAwayListener',
           '@mui/material/styles': 'styles',
           '@mui/material/Chip': 'Chip',
           'react/jsx-runtime': 'jsxRuntime',
