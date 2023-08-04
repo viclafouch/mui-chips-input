@@ -1,16 +1,16 @@
 import React from 'react'
 import { createTheme, ThemeProvider } from '@mui/material'
-import { ComponentMeta, ComponentStory } from '@storybook/react'
+import { Meta, StoryFn } from '@storybook/react'
 import { MuiChipsInput } from './index'
 
 export default {
   title: 'MuiChipsInput',
   component: MuiChipsInput
-} as ComponentMeta<typeof MuiChipsInput>
+} as Meta<typeof MuiChipsInput>
 
 const theme = createTheme()
 
-export const Primary: ComponentStory<typeof MuiChipsInput> = () => {
+export const Primary: StoryFn<typeof MuiChipsInput> = () => {
   const [value, setValue] = React.useState<string[]>(['test'])
 
   const handleChange = (newValue: string[]) => {
