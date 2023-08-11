@@ -1,9 +1,8 @@
 /* eslint-disable react/require-default-props */
 import React from 'react'
 import Chip from '@components/Chip/Chip'
-// eslint-disable-next-line import/no-extraneous-dependencies
-import ClickAwayListener from '@mui/base/ClickAwayListener'
 import CloseIcon from '@mui/icons-material/Close'
+import ClickAwayListener from '@mui/material/ClickAwayListener'
 import IconButton from '@mui/material/IconButton'
 import type { TextFieldProps } from '@mui/material/TextField'
 import { KEYBOARD_KEY, KEYBOARD_KEYCODE } from '@shared/constants/event'

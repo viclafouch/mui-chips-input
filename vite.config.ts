@@ -29,7 +29,6 @@ export default defineConfig({
       fileName: format => `mui-chips-input.${format}.js`
     },
     rollupOptions: {
-      external: ['@mui/base/ClickAwayListener'],
       output: {
         sourcemapExcludeSources: true,
         globals: {
@@ -37,7 +36,7 @@ export default defineConfig({
           '@mui/material/TextField': 'TextField',
           '@mui/icons-material/Close': 'Close',
           '@mui/material/IconButton': 'IconButton',
-          '@mui/base/ClickAwayListener': 'ClickAwayListener',
+          '@mui/material/ClickAwayListener': 'ClickAwayListener',
           '@mui/material/styles': 'styles',
           '@mui/material/Chip': 'Chip',
           'react/jsx-runtime': 'jsxRuntime',
