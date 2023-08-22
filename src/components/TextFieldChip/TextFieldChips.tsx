@@ -324,6 +324,7 @@ const TextFieldChips = React.forwardRef(
           onFocus={handleFocus}
           inputProps={{
             onKeyDown: handleKeyDown,
+            enterKeyHint: 'done',
             ...restInputProps
           }}
           disabled={disabled}
