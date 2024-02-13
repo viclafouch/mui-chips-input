@@ -3,7 +3,7 @@ import { vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import { MuiChipsInput, MuiChipsInputProps } from './index'
 import * as testUtils from './testUtils'
-import '@testing-library/jest-dom'
+import '@testing-library/jest-dom/vitest'
 
 const MuiChipsInputControlled = (props: Partial<MuiChipsInputProps>) => {
   const { onChange, value, ...rest } = props

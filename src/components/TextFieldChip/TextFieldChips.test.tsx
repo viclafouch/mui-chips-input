@@ -5,7 +5,7 @@ import { fireEvent, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import * as testUtils from '../../testUtils'
 import TextFieldChips from './TextFieldChips'
-import '@testing-library/jest-dom'
+import '@testing-library/jest-dom/vitest'
 
 describe('components/TextFieldChips', () => {
   test('should not crash', () => {
