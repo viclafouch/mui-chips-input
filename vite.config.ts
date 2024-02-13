@@ -47,7 +47,8 @@ export default defineConfig({
     peerDepsExternal(),
     react(),
     dts({
-      insertTypesEntry: true
+      insertTypesEntry: true,
+      exclude: ['/**/*.stories.tsx', '/**/*.test.tsx']
     })
   ]
 })
