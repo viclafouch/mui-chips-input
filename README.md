@@ -43,6 +43,22 @@ const MyComponent = () => {
 }
 ```
 
+## Next.js integration
+
+Learn how to use MUI chips input with Next.js
+
+Once you have installed `MUI Chips Input` in your next.js project, it is important to transpile it as it is an ESM package first.
+
+```js
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+ transpilePackages: ['mui-chips-input'],
+ // your config
+}
+
+module.exports = nextConfig
+```
+
 ## [Documentation](https://viclafouch.github.io/mui-chips-input/)
 
 ## Changelog
