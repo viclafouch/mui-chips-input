@@ -12,7 +12,7 @@ This package is written in **TypeScript**. So you don't need to create your own 
 import React from 'react'
 import {
   MuiChipsInput,
-  MuiChipsInputChip,
+  type MuiChipsInputChip,
 } from 'mui-chips-input'
 
 const MyComponent = () => {

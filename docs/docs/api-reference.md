@@ -12,7 +12,6 @@ This article discusses the API and props of **MuiChipsInput**. Props are defined
 - Default: `[]`
 
 ```tsx
-<MuiChipsInput />
 <MuiChipsInput value={['foo', 'bar']} />
 ```
 
