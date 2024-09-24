@@ -231,6 +231,7 @@ describe('components/TextFieldChips', () => {
       />
     )
 
+    // @ts-expect-error
     expect(testUtils.getClearAllButton()).toBeVisible()
 
     testUtils.clearAllChips()
@@ -241,6 +242,7 @@ describe('components/TextFieldChips', () => {
   test('should hide clear all chips when no chips', () => {
     render(<TextFieldChips chips={[]} />)
 
+    // @ts-expect-error
     expect(testUtils.getClearAllButton()).not.toBeVisible()
   })
 
