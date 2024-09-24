@@ -330,6 +330,7 @@ const TextFieldChips = React.forwardRef(
           disabled={disabled}
           error={Boolean(textError) || error}
           helperText={textError || helperText}
+          // eslint-disable-next-line react/jsx-no-duplicate-props
           InputProps={{
             inputRef: handleRef,
             startAdornment: hasAtLeastOneChip
