@@ -1,34 +1,35 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import { fireEvent, screen } from '@testing-library/react'
+import { type RenderResult } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-export function getInputElement() {
-  return screen.getByRole<HTMLInputElement>('textbox')
+export function getInputElement(screen: RenderResult) {
+  return screen.getByRole('textbox') as HTMLInputElement
 }
 
-export function getClearAllButton() {
+export function getClearAllButton(screen: RenderResult) {
   return screen.queryByTestId('CloseIcon')
 }
 
 export async function typeInInputElement(
+  screen: RenderResult,
   value: string
 ): Promise<{ result: string }> {
-  const inputElement = getInputElement()
+  const inputElement = getInputElement(screen)
   await userEvent.type(inputElement, value, { delay: 1 })
 
   return { result: inputElement.value }
 }
 
-export async function addChip(chipValue: string) {
-  await typeInInputElement(chipValue)
+export async function addChip(screen: RenderResult, chipValue: string) {
+  await typeInInputElement(screen, chipValue)
   await userEvent.keyboard('{enter}')
 }
 
-export function deleteChip(chipIndex: number) {
+export async function deleteChip(screen: RenderResult, chipIndex: number) {
   const deleteSvg = screen.getAllByTestId('CancelIcon')[chipIndex]
-  fireEvent.click(deleteSvg)
+  await userEvent.click(deleteSvg)
 }
 
-export function clearAllChips() {
-  return fireEvent.click(getClearAllButton() as HTMLElement)
+export function clearAllChips(screen: RenderResult) {
+  return userEvent.click(getClearAllButton(screen) as HTMLElement)
 }
