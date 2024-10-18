@@ -29,6 +29,12 @@ importers:
       '@mui/material':
         specifier: ^6.1.1
         version: 6.1.1(@emotion/react@11.13.3(@types/react@18.3.9)(react@18.3.1))(@emotion/styled@11.13.0(@emotion/react@11.13.3(@types/react@18.3.9)(react@18.3.1))(@types/react@18.3.9)(react@18.3.1))(@types/react@18.3.9)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@mui/system':
+        specifier: ^6.1.1
+        version: 6.1.1(@emotion/react@11.13.3(@types/react@18.3.9)(react@18.3.1))(@emotion/styled@11.13.0(@emotion/react@11.13.3(@types/react@18.3.9)(react@18.3.1))(@types/react@18.3.9)(react@18.3.1))(@types/react@18.3.9)(react@18.3.1)
+      '@mui/types':
+        specifier: ^7.2.17
+        version: 7.2.17(@types/react@18.3.9)
       '@storybook/addon-actions':
         specifier: ^8.3.3
         version: 8.3.3(storybook@8.3.3)
@@ -1531,14 +1537,6 @@ packages:
         optional: true
       '@emotion/styled':
         optional: true
-      '@types/react':
-        optional: true
-
-  '@mui/types@7.2.16':
-    resolution: {integrity: sha512-qI8TV3M7ShITEEc8Ih15A2vLzZGLhD+/UPNwck/hcls2gwg7dyRjNGXcQYHKLB5Q7PuTRfrTkAoPa2VV1s67Ag==}
-    peerDependencies:
-      '@types/react': ^17.0.0 || ^18.0.0 || ^19.0.0
-    peerDependenciesMeta:
       '@types/react':
         optional: true
 
@@ -9571,7 +9569,7 @@ snapshots:
     dependencies:
       '@babel/runtime': 7.25.6
       '@floating-ui/react-dom': 2.1.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@mui/types': 7.2.16(@types/react@18.3.9)
+      '@mui/types': 7.2.17(@types/react@18.3.9)
       '@mui/utils': 6.0.0-rc.0(@types/react@18.3.9)(react@18.3.1)
       '@popperjs/core': 2.11.8
       clsx: 2.1.1
@@ -9649,10 +9647,6 @@ snapshots:
       '@emotion/styled': 11.13.0(@emotion/react@11.13.3(@types/react@18.3.9)(react@18.3.1))(@types/react@18.3.9)(react@18.3.1)
       '@types/react': 18.3.9
 
-  '@mui/types@7.2.16(@types/react@18.3.9)':
-    optionalDependencies:
-      '@types/react': 18.3.9
-
   '@mui/types@7.2.17(@types/react@18.3.9)':
     optionalDependencies:
       '@types/react': 18.3.9
@@ -9660,7 +9654,7 @@ snapshots:
   '@mui/utils@6.0.0-rc.0(@types/react@18.3.9)(react@18.3.1)':
     dependencies:
       '@babel/runtime': 7.25.6
-      '@mui/types': 7.2.16(@types/react@18.3.9)
+      '@mui/types': 7.2.17(@types/react@18.3.9)
       '@types/prop-types': 15.7.12
       clsx: 2.1.1
       prop-types: 15.8.1
