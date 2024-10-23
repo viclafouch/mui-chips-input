@@ -15,6 +15,15 @@ This article discusses the API and props of **MuiChipsInput**. Props are defined
 <MuiChipsInput value={['foo', 'bar']} />
 ```
 
+## `addOnWhichKey`
+
+- Type: `string[]` | `string`
+- Default: `KEYBOARD_KEY.enter`
+
+```tsx
+<MuiChipsInput value={[',', ' ', 'Enter']} />
+```
+
 ## `onChange`
 
 - Type: `(value: string[]) => void`
@@ -31,6 +40,8 @@ const handleChange = (value) => {
 
 <MuiChipsInput onChange={handleChange} />
 ```
+
+
 
 ## `onAddChip`
 
