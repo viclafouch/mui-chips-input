@@ -79,9 +79,14 @@ const MuiChipsInput = React.forwardRef(
       onChange?.([])
     }
 
+    const chipsChange = (chips: MuiChipsInputChip[]) => {
+      onChange?.(chips)
+    }
+
     return (
       <TextFieldChips
         chips={value}
+        chipsChange={chipsChange}
         onAddChip={handleAddChip}
         onInputChange={onInputChange}
         disableDeleteOnBackspace={disableDeleteOnBackspace}
