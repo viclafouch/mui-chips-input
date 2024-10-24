@@ -18,6 +18,7 @@ import Styled from './TextFieldChips.styled'
 
 type TextFieldChipsProps = TextFieldProps & {
   chips: MuiChipsInputChip[]
+  chipsChange?: (chips: MuiChipsInputChip[]) => void
   onAddChip?: (chip: MuiChipsInputChip) => void
   onEditChip?: (chip: MuiChipsInputChip, chipIndex: number) => void
   clearInputOnBlur?: boolean
@@ -42,6 +43,7 @@ const TextFieldChips = React.forwardRef(
   (
     {
       chips,
+      chipsChange,
       onAddChip,
       onEditChip,
       onDeleteChip,
@@ -72,6 +74,9 @@ const TextFieldChips = React.forwardRef(
     const [inputValueUncontrolled, setInputValueUncontrolled] =
       React.useState<string>('')
     const [textError, setTextError] = React.useState<string>('')
+    const [draggedChipIndex, setDraggedChipIndex] = React.useState<
+      number | null
+    >(null)
     const inputElRef = React.useRef<HTMLDivElement | null>(null)
     const isFocusingRef = React.useRef<boolean>(false)
     const isControlledRef = React.useRef(
@@ -310,6 +315,27 @@ const TextFieldChips = React.forwardRef(
       }
     }
 
+    const handleDragStart = (index: number) => {
+      setDraggedChipIndex(index)
+    }
+
+    const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
+      event.preventDefault()
+    }
+
+    const handleDrop = (dropIndex: number) => {
+      if (draggedChipIndex === null || draggedChipIndex === dropIndex) {
+        return
+      }
+
+      const newChips = [...chips]
+      const [draggedChip] = newChips.splice(draggedChipIndex, 1)
+      newChips.splice(dropIndex, 0, draggedChip)
+
+      chipsChange?.(newChips)
+      setDraggedChipIndex(null)
+    }
+
     const hasAtLeastOneChip = chips.length > 0
 
     return (
@@ -351,7 +377,18 @@ const TextFieldChips = React.forwardRef(
                   return renderChip ? (
                     renderChip(Chip, key, ChipProps)
                   ) : (
-                    <Chip {...ChipProps} key={key} />
+                    <Chip
+                      {...ChipProps}
+                      key={key}
+                      draggable
+                      onDragStart={() => {
+                        handleDragStart(index)
+                      }}
+                      onDragOver={handleDragOver}
+                      onDrop={() => {
+                        handleDrop(index)
+                      }}
+                    />
                   )
                 })
               : null,
