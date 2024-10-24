@@ -18,7 +18,7 @@ This article discusses the API and props of **MuiChipsInput**. Props are defined
 ## `addOnWhichKey`
 
 - Type: `string[]` | `string`
-- Default: `KEYBOARD_KEY.enter`
+- Default: `'Enter'`
 
 ```tsx
 <MuiChipsInput addOnWhichKey={[',', ' ', 'Enter']} />
