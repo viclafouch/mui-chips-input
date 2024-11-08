@@ -37,7 +37,7 @@
     "chips"
   ],
   "scripts": {
-    "build": "pnpm lint && pnpm test -- run && vite build",
+    "build": "pnpm lint && pnpm test -- run && vite build && find dist -name '*.js' -exec sed -i 's/from \"\\([^\"].*\\)\"/from \"\\1.js\"/g' {} +",
     "lint": "tsc && eslint . --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "pnpm lint -- --fix",
     "check-types": "attw --pack . --ignore-rules cjs-resolves-to-esm  -f json",
