@@ -13,7 +13,6 @@
   ],
   "main": "./dist/mui-chips-input.es.js",
   "types": "./dist/index.d.ts",
-  "type": "module",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
