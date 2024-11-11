@@ -45,7 +45,6 @@ const TextFieldChips = React.forwardRef(
       onAddChip,
       onEditChip,
       onDeleteChip,
-      InputProps,
       onInputChange,
       disabled,
       clearInputOnBlur,
@@ -54,7 +53,7 @@ const TextFieldChips = React.forwardRef(
       error,
       helperText,
       hideClearAll,
-      inputProps,
+      slotProps,
       size,
       disableDeleteOnBackspace,
       disableEdition,
@@ -80,8 +79,6 @@ const TextFieldChips = React.forwardRef(
     const [chipIndexEditable, setChipIndexEditable] = React.useState<
       null | number
     >(null)
-    const { onKeyDown, ...restInputProps } = inputProps || {}
-    const { inputRef, ...restIInputProps } = InputProps || {}
 
     const clearTextError = () => {
       setTextError('')
@@ -266,8 +263,6 @@ const TextFieldChips = React.forwardRef(
           clearChipIndexEditable()
         }
       }
-
-      onKeyDown?.(event)
     }
 
     const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
@@ -311,6 +306,8 @@ const TextFieldChips = React.forwardRef(
     }
 
     const hasAtLeastOneChip = chips.length > 0
+    const { ...restSlotProps } = slotProps || {}
+    const { htmlInput, input, ...restSlotPropsInput } = restSlotProps || {}
 
     return (
       <ClickAwayListener onClickAway={handleClickAway}>
@@ -322,56 +319,60 @@ const TextFieldChips = React.forwardRef(
           size={size}
           placeholder="Type and press enter"
           onFocus={handleFocus}
-          inputProps={{
-            onKeyDown: handleKeyDown,
-            enterKeyHint: 'done',
-            ...restInputProps
+          slotProps={{
+            htmlInput: {
+              onKeyDown: handleKeyDown,
+              enterKeyHint: 'done',
+              ref: handleRef,
+              ...htmlInput
+            },
+            input: {
+              startAdornment: hasAtLeastOneChip
+                ? chips.map((chip, index) => {
+                    const key = `chip-${index}`
+                    const ChipProps: MuiChipsInputChipProps = {
+                      index,
+                      onEdit: handleEdit,
+                      label: chip,
+                      title: chip,
+                      isEditing: index === chipIndexEditable,
+                      size,
+                      disabled,
+                      disableEdition,
+                      onDelete: handleDeleteChip
+                    }
+
+                    return renderChip ? (
+                      renderChip(Chip, key, ChipProps)
+                    ) : (
+                      <Chip {...ChipProps} key={key} />
+                    )
+                  })
+                : null,
+              endAdornment: !hideClearAll ? (
+                <Styled.EndAdornmentClose
+                  style={{
+                    visibility: hasAtLeastOneChip ? 'visible' : 'hidden'
+                  }}
+                >
+                  <IconButton
+                    aria-label="Clear"
+                    title="Clear"
+                    disabled={disabled}
+                    size="small"
+                    onClick={handleClearAll}
+                  >
+                    <CloseIcon fontSize="small" />
+                  </IconButton>
+                </Styled.EndAdornmentClose>
+              ) : null,
+              ...input
+            },
+            ...restSlotPropsInput
           }}
           disabled={disabled}
           error={Boolean(textError) || error}
           helperText={textError || helperText}
-          // eslint-disable-next-line react/jsx-no-duplicate-props
-          InputProps={{
-            inputRef: handleRef,
-            startAdornment: hasAtLeastOneChip
-              ? chips.map((chip, index) => {
-                  const key = `chip-${index}`
-                  const ChipProps: MuiChipsInputChipProps = {
-                    index,
-                    onEdit: handleEdit,
-                    label: chip,
-                    title: chip,
-                    isEditing: index === chipIndexEditable,
-                    size,
-                    disabled,
-                    disableEdition,
-                    onDelete: handleDeleteChip
-                  }
-
-                  return renderChip ? (
-                    renderChip(Chip, key, ChipProps)
-                  ) : (
-                    <Chip {...ChipProps} key={key} />
-                  )
-                })
-              : null,
-            endAdornment: !hideClearAll ? (
-              <Styled.EndAdornmentClose
-                style={{ visibility: hasAtLeastOneChip ? 'visible' : 'hidden' }}
-              >
-                <IconButton
-                  aria-label="Clear"
-                  title="Clear"
-                  disabled={disabled}
-                  size="small"
-                  onClick={handleClearAll}
-                >
-                  <CloseIcon fontSize="small" />
-                </IconButton>
-              </Styled.EndAdornmentClose>
-            ) : null,
-            ...restIInputProps
-          }}
           {...restTextFieldProps}
         />
       </ClickAwayListener>
