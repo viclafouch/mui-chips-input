@@ -36,21 +36,20 @@
     "chips"
   ],
   "scripts": {
-    "build": "pnpm lint && pnpm test -- run && vite build",
+    "build": "npm run lint && npm run test -- run && vite build",
     "lint": "tsc && eslint . --ext .js,.jsx,.ts,.tsx",
-    "lint:fix": "pnpm lint -- --fix",
+    "lint:fix": "npm run lint -- --fix",
     "check-types": "attw --pack . --ignore-rules cjs-resolves-to-esm  -f json",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "test": "vitest",
     "release": "standard-version",
     "coverage": "vitest run --coverage",
-    "prepare": "husky",
-    "preinstall": "npx only-allow pnpm"
+    "prepare": "husky"
   },
   "standard-version": {
     "scripts": {
-      "prerelease": "pnpm run build"
+      "prerelease": "npm run build"
     },
     "skip": {
       "changelog": true
