@@ -43,7 +43,7 @@ export interface BaseMuiChipsInputProps {
     ChipComponent: MuiChipsInputChipComponent,
     key: React.Key,
     ChipProps: MuiChipsInputChipProps
-  ) => JSX.Element
+  ) => React.ReactNode
   hideClearAll?: boolean
   disableEdition?: boolean
   disableDeleteOnBackspace?: boolean

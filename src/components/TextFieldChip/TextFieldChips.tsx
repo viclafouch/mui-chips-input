@@ -35,7 +35,7 @@ type TextFieldChipsProps = TextFieldProps & {
     ChipComponent: MuiChipsInputChipComponent,
     key: React.Key,
     ChipProps: MuiChipsInputChipProps
-  ) => JSX.Element
+  ) => React.ReactNode
 }
 
 const TextFieldChips = React.forwardRef(
