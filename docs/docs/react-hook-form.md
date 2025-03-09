@@ -9,11 +9,16 @@ import Button from "@mui/material/Button";
 import { MuiChipsInput } from "mui-chips-input";
 import { Controller, useForm } from "react-hook-form";
 
+const schema = z.object({
+  chips: z.array(z.string()).min(1),
+});
+
 const App = () => {
   const { control, handleSubmit } = useForm({
     defaultValues: {
       chips: []
-    }
+    },
+    resolver: zodResolver(schema),
   });
 
   const onSubmit = (data) => {
@@ -29,6 +34,7 @@ const App = () => {
           <MuiChipsInput
             {...field}
             hideClearAll
+            helperText={fieldState.error?.message}
             error={fieldState.invalid}
           />
         )}
@@ -43,4 +49,4 @@ const App = () => {
 }
 ```
 
-[![Edit on CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/react-hook-form-with-mui-chips-input-xwyhg5?theme=dark)
+[![Edit on CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/sandbox/stoic-christian-nzxtg5)
