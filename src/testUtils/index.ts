@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import { type RenderResult } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 

@@ -19,7 +19,7 @@ const TextFieldStyled = styled(TextField)((props) => {
       align-items: flex-start;
       row-gap: 5px;
       padding-top: ${props.size === 'small' ? '5px' : '9px'};
-      padding-right: ${props.InputProps?.endAdornment ? '30px' : '9px'};
+      padding-right: 30px;
       padding-bottom: ${props.size === 'small' ? '5px' : '9px'};
       padding-left: 10px;
 

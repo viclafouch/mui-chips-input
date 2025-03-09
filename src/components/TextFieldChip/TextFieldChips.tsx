@@ -1,4 +1,4 @@
-/* eslint-disable react/require-default-props */
+/* eslint-disable @typescript-eslint/no-misused-spread */
 import React from 'react'
 import Chip from '@components/Chip/Chip'
 import { KEYBOARD_KEY, KEYBOARD_KEYCODE } from '@shared/constants/event'
@@ -228,6 +228,7 @@ const TextFieldChips = React.forwardRef(
     }
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+      // eslint-disable-next-line @typescript-eslint/no-deprecated
       const isKeyIsAdd = matchIsValidKeyToAdd(event.key, event.keyCode)
       const isBackspace = event.key === KEYBOARD_KEY.backspace
       const inputValueTrimed = inputValue.trim()

@@ -1,8 +1,8 @@
-import { defineConfig } from 'vitest/config'
-import react from '@vitejs/plugin-react'
+import path from 'node:path'
 import peerDepsExternal from 'rollup-plugin-peer-deps-external'
 import dts from 'vite-plugin-dts'
-import path from 'node:path'
+import { defineConfig } from 'vitest/config'
+import react from '@vitejs/plugin-react'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -24,7 +24,9 @@ export default defineConfig({
       formats: ['es'],
       entry: path.resolve(__dirname, 'src/index.tsx'),
       name: 'mui-chips-input',
-      fileName: format => `mui-chips-input.${format}.js`
+      fileName: (format) => {
+        return `mui-chips-input.${format}.js`
+      }
     },
     rollupOptions: {
       output: {
@@ -48,7 +50,7 @@ export default defineConfig({
     dts({
       insertTypesEntry: true,
       rollupTypes: true,
-      exclude: ['/**/*.stories.tsx', '/**/*.test.tsx']
+      exclude: ['/**/*.stories.tsx', '/**/*.test.tsx', '.storybook/**/*']
     })
   ]
 })

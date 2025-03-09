@@ -9,7 +9,7 @@ export function assocRefToPropRef(
     propRef(ref)
   } else if (propRef && matchIsObject(propRef) && 'current' in propRef) {
     // @ts-ignore
-    // eslint-disable-next-line no-param-reassign
+
     propRef.current = ref
   }
 }
