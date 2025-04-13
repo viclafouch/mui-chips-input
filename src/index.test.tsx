@@ -1,7 +1,8 @@
 import React from 'react'
 import { vi } from 'vitest'
 import { render } from '@testing-library/react'
-import { MuiChipsInput, MuiChipsInputProps } from './index'
+import type { MuiChipsInputProps } from './index'
+import { MuiChipsInput } from './index'
 import * as testUtils from './testUtils'
 import '@testing-library/jest-dom/vitest'
 

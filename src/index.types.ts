@@ -1,4 +1,4 @@
-import React from 'react'
+import type React from 'react'
 import type { ChipProps as MuiChipProps } from '@mui/material/Chip'
 import type { TextFieldProps as MuiTextFieldProps } from '@mui/material/TextField'
 
