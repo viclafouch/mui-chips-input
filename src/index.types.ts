@@ -30,6 +30,7 @@ export type MuiChipsInputChipComponent =
 
 export type MuiChipsInputChip = string
 
+// eslint-disable-next-line @typescript-eslint/consistent-type-definitions -- interface preserved to avoid breaking change for consumers using declaration merging
 export interface BaseMuiChipsInputProps {
   value?: MuiChipsInputChip[]
   onInputChange?: (inputValue: string) => void

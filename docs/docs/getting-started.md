@@ -5,15 +5,27 @@ sidebar_position: 1
 # Getting Started
 
 ## Install
+
 ```bash
-npm install mui-chips-input --save
+npm install mui-chips-input
 ```
+
 or you can use **yarn**
+
 ```bash
 yarn add mui-chips-input
 ```
 
-We have completed installing the package.
+### Peer dependencies
+
+You need to have these peer dependencies installed:
+
+- `react` >= 18
+- `react-dom` >= 18
+- `@mui/material` >= 7
+- `@mui/icons-material` >= 7
+- `@emotion/react` >= 11
+- `@emotion/styled` >= 11
 
 ## Simple usage
 
@@ -43,13 +55,14 @@ Learn how to use MUI chips input with Next.js
 Once you have installed `MUI Chips Input` in your next.js project, it is important to transpile it as it is an ESM package first.
 
 ```js
+// next.config.mjs
 /** @type {import('next').NextConfig} */
 const nextConfig = {
  transpilePackages: ['mui-chips-input'],
  // your config
 }
 
-module.exports = nextConfig
+export default nextConfig
 ```
 
 ## Congratulations !

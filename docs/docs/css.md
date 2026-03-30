@@ -10,7 +10,7 @@ Like any component, if you want to override a component's styles using custom cl
 <MuiChipsInput className="my-class-name" />
 ```
 
-Then, you can use the differents global class names (see below) to target an element of `MuiChipsInput`.
+Then, you can use the different global class names (see below) to target an element of `MuiChipsInput`.
 
 
 | 	Global class                            | Description                                                                                                                   |
@@ -21,10 +21,10 @@ Then, you can use the differents global class names (see below) to target an ele
 
 For example: target the `.MuiChipsInput-Chip` global class name to customize all chips.
 
-## Example with styled-component / emotion
+## Example with styled-components / emotion
 
 ```jsx
-import { styled } from 'styled-component' // or emotion
+import { styled } from 'styled-components' // or emotion
 import { MuiChipsInput } from 'mui-chips-input'
 
 const MuiChipsInputStyled = styled(MuiChipsInput)`

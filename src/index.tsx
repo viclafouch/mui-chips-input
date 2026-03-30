@@ -9,7 +9,7 @@ import type {
   MuiChipsInputProps
 } from './index.types'
 
-export {
+export type {
   MuiChipsInputChip,
   MuiChipsInputChipComponent,
   MuiChipsInputChipProps,

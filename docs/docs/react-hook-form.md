@@ -1,3 +1,7 @@
+---
+sidebar_position: 7
+---
+
 # React Hook Form
 
 Here an example if you want to plug `MuiChipsInput` to your form using [React Hook Form](https://react-hook-form.com/).
@@ -8,6 +12,8 @@ import ReactDOM from "react-dom";
 import Button from "@mui/material/Button";
 import { MuiChipsInput } from "mui-chips-input";
 import { Controller, useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const schema = z.object({
   chips: z.array(z.string()).min(1),

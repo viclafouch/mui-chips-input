@@ -8,6 +8,10 @@ import TextFieldChips from './TextFieldChips'
 import '@testing-library/jest-dom/vitest'
 
 describe('components/TextFieldChips', () => {
+  afterEach(() => {
+    vi.restoreAllMocks()
+  })
+
   test('should not crash', () => {
     render(<TextFieldChips chips={[]} />)
   })
@@ -59,38 +63,6 @@ describe('components/TextFieldChips', () => {
     expect(callbackOnAddChip).toHaveBeenCalledWith('test')
   })
 
-  // test('should call onDeleteChip when user use backspace without disableDeleteOnBackspace', () => {
-  //   const callbackOnDeleteChip = vi.fn(() => {})
-  //    const screen  = render(
-  //     <TextFieldChips chips={['test']} onDeleteChip={callbackOnDeleteChip} />
-  //   )
-  //   fireEvent.focus(testUtils.getInputElement(screen))
-  //   fireEvent.keyDown(testUtils.getInputElement(screen), {
-  //     key: 'Backspace',
-  //     code: 8,
-  //     charCode: 8
-  //   })
-  //   expect(callbackOnDeleteChip).toHaveBeenCalledWith(0)
-  // })
-
-  // test('should not call onDeleteChip when user use backspace with disableDeleteOnBackspace', () => {
-  //   const callbackOnDeleteChip = vi.fn(() => {})
-  //    const screen  = render(
-  //     <TextFieldChips
-  //       chips={['test']}
-  //       disableDeleteOnBackspace
-  //       onDeleteChip={callbackOnDeleteChip}
-  //     />
-  //   )
-  //   await userEvent.click(testUtils.getInputElement(screen))
-  //   await userEvent.keyboard(testUtils.getInputElement(screen), {
-  //     key: 'Backspace',
-  //     code: 8,
-  //     charCode: 8
-  //   })
-  //   expect(callbackOnDeleteChip).not.toHaveBeenCalled()
-  // })
-
   test('should call onDeleteChip when user click on the svg icon', async () => {
     const callbackOnDeleteChip = vi.fn(() => {})
     const screen = render(
@@ -101,17 +73,7 @@ describe('components/TextFieldChips', () => {
     expect(callbackOnDeleteChip).toHaveBeenCalledWith(0)
   })
 
-  test('should call onInputChange user updates the input', async () => {
-    const callbackOnInputChange = vi.fn(() => {})
-    const screen = render(
-      <TextFieldChips chips={['test']} onInputChange={callbackOnInputChange} />
-    )
-    const inputElement = screen.getByRole('textbox') as HTMLInputElement
-    await userEvent.type(inputElement, 'test', { delay: 1 })
-    expect(callbackOnInputChange).toHaveBeenCalled()
-  })
-
-  test('should call onInputChange user updates the input', async () => {
+  test('should call onInputChange when user updates the input', async () => {
     const callbackOnInputChange = vi.fn(() => {})
     const screen = render(
       <TextFieldChips chips={['test']} onInputChange={callbackOnInputChange} />
@@ -344,7 +306,7 @@ describe('components/TextFieldChips', () => {
     expect(screen.getAllByRole('button').length).toBe(1)
   })
 
-  test('should edit chip props with the  const screen  = renderChip prop', () => {
+  test('should apply custom chip props when using renderChip', () => {
     const screen = render(
       <TextFieldChips
         chips={['test']}
@@ -377,6 +339,6 @@ describe('components/TextFieldChips', () => {
 
     await testUtils.typeInInputElement(screen, ' ')
 
-    expect(callbackOnInputChange).toBeCalledWith('Hello world ')
+    expect(callbackOnInputChange).toHaveBeenCalledWith('Hello world ')
   })
 })

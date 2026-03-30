@@ -1,6 +1,6 @@
 <div align="center">
 <h1>Material UI chips input</h1>
-  <p>A chips input designed for the React library <a href="https://material-ui.com/">Material UI</a></p>
+  <p>A chips input designed for the React library <a href="https://mui.com/">MUI (Material UI)</a></p>
 </div>
 <div align="center">
 
@@ -50,13 +50,14 @@ Learn how to use MUI chips input with Next.js
 Once you have installed `MUI Chips Input` in your next.js project, it is important to transpile it as it is an ESM package first.
 
 ```js
+// next.config.mjs
 /** @type {import('next').NextConfig} */
 const nextConfig = {
  transpilePackages: ['mui-chips-input'],
  // your config
 }
 
-module.exports = nextConfig
+export default nextConfig
 ```
 
 ## [Documentation](https://viclafouch.github.io/mui-chips-input/)

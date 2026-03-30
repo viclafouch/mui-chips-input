@@ -8,7 +8,11 @@ const config = {
   url: 'https://viclafouch.github.io',
   baseUrl: '/mui-chips-input/',
   onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
+  markdown: {
+    hooks: {
+      onBrokenMarkdownLinks: 'warn'
+    }
+  },
   favicon: 'img/favicon.ico',
 
   // GitHub pages deployment config.

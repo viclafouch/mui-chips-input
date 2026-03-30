@@ -8,8 +8,6 @@ export function assocRefToPropRef(
   if (typeof propRef === 'function') {
     propRef(ref)
   } else if (propRef && matchIsObject(propRef) && 'current' in propRef) {
-    // @ts-ignore
-
-    propRef.current = ref
+    ;(propRef as React.RefObject<unknown>).current = ref
   }
 }

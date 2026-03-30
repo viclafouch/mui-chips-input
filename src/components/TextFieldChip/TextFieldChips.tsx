@@ -1,13 +1,12 @@
-/* eslint-disable @typescript-eslint/no-misused-spread */
 import React from 'react'
 import Chip from '@components/Chip/Chip'
-import { KEYBOARD_KEY, KEYBOARD_KEYCODE } from '@shared/constants/event'
-import { matchIsBoolean } from '@shared/helpers/boolean'
-import { assocRefToPropRef } from '@shared/helpers/ref'
 import CloseIcon from '@mui/icons-material/Close'
 import ClickAwayListener from '@mui/material/ClickAwayListener'
 import IconButton from '@mui/material/IconButton'
 import type { TextFieldProps } from '@mui/material/TextField'
+import { KEYBOARD_KEY, KEYBOARD_KEYCODE } from '@shared/constants/event'
+import { matchIsBoolean } from '@shared/helpers/boolean'
+import { assocRefToPropRef } from '@shared/helpers/ref'
 import type {
   MuiChipsInputChip,
   MuiChipsInputChipComponent,
@@ -39,6 +38,7 @@ type TextFieldChipsProps = TextFieldProps & {
 }
 
 const TextFieldChips = React.forwardRef(
+  // eslint-disable-next-line max-lines-per-function -- forwardRef component with many event handlers that cannot be easily split
   (
     {
       chips,
@@ -73,9 +73,7 @@ const TextFieldChips = React.forwardRef(
     const [textError, setTextError] = React.useState<string>('')
     const inputElRef = React.useRef<HTMLDivElement | null>(null)
     const isFocusingRef = React.useRef<boolean>(false)
-    const isControlledRef = React.useRef(
-      typeof inputValueControlled === 'string'
-    )
+    const isControlled = typeof inputValueControlled === 'string'
     const [chipIndexEditable, setChipIndexEditable] = React.useState<
       null | number
     >(null)
@@ -84,7 +82,6 @@ const TextFieldChips = React.forwardRef(
       setTextError('')
     }
 
-    const isControlled = isControlledRef.current
     const inputValue = isControlled
       ? (inputValueControlled as string)
       : inputValueUncontrolled
@@ -216,9 +213,7 @@ const TextFieldChips = React.forwardRef(
 
       if (addOnWhichKey) {
         if (Array.isArray(addOnWhichKey)) {
-          return addOnWhichKey.some((key) => {
-            return key === eventKey
-          })
+          return addOnWhichKey.includes(eventKey)
         }
 
         return addOnWhichKey === eventKey
@@ -231,7 +226,7 @@ const TextFieldChips = React.forwardRef(
       // eslint-disable-next-line @typescript-eslint/no-deprecated
       const isKeyIsAdd = matchIsValidKeyToAdd(event.key, event.keyCode)
       const isBackspace = event.key === KEYBOARD_KEY.backspace
-      const inputValueTrimed = inputValue.trim()
+      const inputValueTrimmed = inputValue.trim()
 
       if (!isKeyIsAdd && event.code === 'Tab') {
         handleClickAway()
@@ -244,12 +239,12 @@ const TextFieldChips = React.forwardRef(
       }
 
       if (inputValue.length > 0 && isKeyIsAdd) {
-        if (inputValueTrimed.length === 0) {
+        if (inputValueTrimmed.length === 0) {
           clearInputValue()
         } else if (chipIndexEditable !== null) {
-          updateChip(inputValueTrimed, chipIndexEditable, event)
+          updateChip(inputValueTrimmed, chipIndexEditable, event)
         } else {
-          addChip(inputValueTrimed, event)
+          addChip(inputValueTrimmed, event)
         }
       } else if (
         isBackspace &&
@@ -307,8 +302,7 @@ const TextFieldChips = React.forwardRef(
     }
 
     const hasAtLeastOneChip = chips.length > 0
-    const { ...restSlotProps } = slotProps || {}
-    const { htmlInput, input, ...restSlotPropsInput } = restSlotProps || {}
+    const { htmlInput, input, ...restSlotPropsInput } = slotProps || {}
 
     return (
       <ClickAwayListener onClickAway={handleClickAway}>
@@ -325,11 +319,13 @@ const TextFieldChips = React.forwardRef(
               onKeyDown: handleKeyDown,
               enterKeyHint: 'done',
               ref: handleRef,
+              // eslint-disable-next-line @typescript-eslint/no-misused-spread -- MUI slotProps are objects, not functions
               ...htmlInput
             },
             input: {
               startAdornment: hasAtLeastOneChip
-                ? chips.map((chip, index) => {
+                ? // eslint-disable-next-line react-hooks/refs -- false positive: renderChip is a render callback, not reading refs
+                  chips.map((chip, index) => {
                     const key = `chip-${index}`
                     const ChipProps: MuiChipsInputChipProps = {
                       index,
@@ -367,6 +363,7 @@ const TextFieldChips = React.forwardRef(
                   </IconButton>
                 </Styled.EndAdornmentClose>
               ) : null,
+              // eslint-disable-next-line @typescript-eslint/no-misused-spread -- MUI slotProps are objects, not functions
               ...input
             },
             ...restSlotPropsInput

@@ -19,6 +19,10 @@ const MuiChipsInputControlled = (props: Partial<MuiChipsInputProps>) => {
 }
 
 describe('components/MuiChipsInput', () => {
+  afterEach(() => {
+    vi.restoreAllMocks()
+  })
+
   test('should display chips', () => {
     const screen = render(<MuiChipsInput value={['foo', 'bar']} />)
     expect(screen.getByTitle('foo')).toBeTruthy()

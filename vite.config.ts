@@ -1,20 +1,27 @@
-import path from 'node:path'
-import peerDepsExternal from 'rollup-plugin-peer-deps-external'
+import { resolve } from 'node:path'
 import dts from 'vite-plugin-dts'
-import { defineConfig } from 'vitest/config'
+import { configDefaults, defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react'
+import pkg from './package.json' with { type: 'json' }
 
-// https://vitejs.dev/config/
+const external = [
+  ...Object.keys(pkg.peerDependencies ?? {}),
+  'react/jsx-runtime',
+  /^@mui\/material\//,
+  /^@mui\/icons-material\//
+]
+
 export default defineConfig({
   test: {
     environment: 'jsdom',
-    globals: true
+    globals: true,
+    exclude: [...configDefaults.exclude, '**/dist/**']
   },
   resolve: {
     alias: {
-      '@assets': path.resolve(__dirname, './src/assets'),
-      '@shared': path.resolve(__dirname, './src/shared'),
-      '@components': path.resolve(__dirname, './src/components')
+      '@assets': resolve(import.meta.dirname, './src/assets'),
+      '@shared': resolve(import.meta.dirname, './src/shared'),
+      '@components': resolve(import.meta.dirname, './src/components')
     }
   },
   build: {
@@ -22,30 +29,20 @@ export default defineConfig({
     minify: true,
     lib: {
       formats: ['es'],
-      entry: path.resolve(__dirname, 'src/index.tsx'),
+      entry: resolve(import.meta.dirname, 'src/index.tsx'),
       name: 'mui-chips-input',
       fileName: (format) => {
         return `mui-chips-input.${format}.js`
       }
     },
-    rollupOptions: {
+    rolldownOptions: {
       output: {
-        sourcemapExcludeSources: true,
-        globals: {
-          react: 'React',
-          '@mui/material/TextField': 'TextField',
-          '@mui/icons-material/Close': 'Close',
-          '@mui/material/IconButton': 'IconButton',
-          '@mui/material/ClickAwayListener': 'ClickAwayListener',
-          '@mui/material/styles': 'styles',
-          '@mui/material/Chip': 'Chip',
-          'react/jsx-runtime': 'jsxRuntime'
-        }
-      }
+        sourcemapExcludeSources: true
+      },
+      external
     }
   },
   plugins: [
-    peerDepsExternal(),
     react(),
     dts({
       insertTypesEntry: true,
